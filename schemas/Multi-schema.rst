@@ -167,8 +167,8 @@ database used by multiple schema in this case would result in the entire
 database being removed and data from all related schema being lost.
 
 
-Using Multiple Schemas via Separate Schema Objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Multi-Schema Data Migration Using Schema Objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Less frequently, it is necessary to use multiple schemas via separate schema
 objects within the same module or script. This use case is more common in the
@@ -403,7 +403,6 @@ From here, the ingest schema can be kept if needed for reference, or removed as
 is deemed fit, and the `real` schema can be used for native input of new records
 without needing to keep track of the various ingest files from the previous
 manual approach.
-
 
 .. |python| image:: ../_static/img/python-tiny.png
 .. |matlab| image:: ../_static/img/matlab-tiny.png
