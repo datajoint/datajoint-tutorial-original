@@ -2,21 +2,14 @@
 
 This pipeline is based on the Python tutorial documents available at:
 
-https://tutorials.datajoint.io/
+  https://tutorials.datajoint.io/
 
 with data available from:
 
-wget https://tutorials.datajoint.io/_downloads/python-data.zip
+  https://tutorials.datajoint.io/_downloads/python-data.zip
 
 ## Tutorial Schema
 ![Entity-Relationship Diagram](first-pipeline-python.png)
-
-## Online viewing
-
-The demo notebookcan be better viewed online through the Jupyter.org
-viewer at:
-
-http://nbviewer.jupyter.org/github/datajoint/datajoint-tutorial/tree/master/beginner/building-first-pipeline/python/first-pipeline-python.ipynb
 
 ## Obtain credentials
 
