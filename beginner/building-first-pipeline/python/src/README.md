@@ -38,6 +38,12 @@ as follows:
     >>> import os
     >>> sys.path.insert(0, '/the/path/to/the/code')  # or. e.g 'C:\tutorial'
 
+From here, you can install jupyter notebook and start the jupyter notebook 
+viewer to interact with the example notebook from the command line as follows:
+
+   $ pip install jupyter
+   $ jupyter notebook
+
 # Support
 
 Please submit issues and questions through the [Issues tab
