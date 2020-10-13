@@ -167,15 +167,17 @@ Save your new class as ``Mouse.m`` in the ``+tutorial`` package folder. You may 
 Creating the table in the data pipeline
 ---------------------------------------
 
-Calling the ``Mouse`` class for the first time  creates the 
-corresponding table in the database server. DataJoint displays the SQL code used to create the table.
+Calling the ``Mouse`` class for the first time creates the corresponding table in the database server.
+DataJoint displays the SQL code used to create the table.
 
 .. code-block:: matlab
+
+   >> tutorial.Mouse
 
    ans = 
 
    <SQL>
-   CREATE TABLE `tutorial`.`mouse2` (
+   CREATE TABLE `tutorial`.`mouse` (
    `mouse_id` int                   NOT NULL COMMENT "unique    
    mouse id",
    `dob` date                       NOT NULL COMMENT "mouse date      
@@ -186,9 +188,11 @@ corresponding table in the database server. DataJoint displays the SQL code used
    ) ENGINE = InnoDB, COMMENT "mouse"
    </SQL>
 
-You can check the contents of the table in the database by typing ``tutorial.Mouse``:
+You can also see a preview of the table contents in the database by typing ``tutorial.Mouse``:
 
 .. code-block:: matlab
+
+  >> tutorial.Mouse
 
   Object tutorial.Mouse
 
