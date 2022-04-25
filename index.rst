@@ -46,3 +46,12 @@ http://docs.datajoint.io.
    :caption: First Steps
 
    beginner/building-first-pipeline/index
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :includehidden:
+   :caption: Advanced Usage
+
+   schemas/Multi-schema
+
