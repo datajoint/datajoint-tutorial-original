@@ -1,0 +1,30 @@
+# # HOST_UID=1000 docker-compose up --build
+version: '2.4'
+services:
+  # example how to build
+  builder:
+    # build: .
+    image: datajoint/miniconda3:4.10.3-py3.9-debian
+    user: ${HOST_UID}:anaconda
+    volumes:
+      - ./src:/main
+      - ./pip_requirements.txt:/tmp/pip_requirements.txt
+      - ./apt_requirements.txt:/tmp/apt_requirements.txt
+    command:
+      - bash
+      - -c
+      - |
+        make html
+        chmod -R o=rwx /main/_build/html
+        tail -f /dev/null
+  # # example how to host
+  # fakeservices.datajoint.io:
+  #   image: datajoint/nginx:v0.1.3
+  #   environment:
+  #     - ADD_djtutorial_TYPE=STATIC
+  #     - ADD_djtutorial_PREFIX=/
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./_build/html:/usr/share/nginx/html:ro
