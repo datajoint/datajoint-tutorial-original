@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Queries with multiple tables &mdash; DataJoint Tutorials  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/datajoint_theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Importing data into a table" href="importing-data.html" />
+    <link rel="prev" title="Defining dependent tables" href="child-table.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/djTutorialLogoWhite.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/introduction.html">Setting up for DataJoint</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/introduction.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/introduction.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/get-database.html">Getting connected to a database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#connect-to-datajoint-io-recommended">Connect to DataJoint.io (Recommended)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/get-database.html#signing-up-to-datajoint-io-account">Signing up to DataJoint.io account</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#setting-up-a-local-database-server-intermediate">Setting up a local database server (Intermediate)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/local-database.html">Setting Up a Local Database Server</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#setting-up-database-using-docker">Setting up database using Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#why-docker">Why Docker?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#installing-docker">Installing Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#launching-a-database-server">Launching a database server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#setting-up-a-database-server-on-another-machine-advanced">Setting up a database server on another machine (Advanced)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/datajoint-python.html">Installing DataJoint for Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#installing-the-datajoint-package">Installing the DataJoint Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-python.html#upgrading-datajoint">Upgrading DataJoint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#configuring-datajoint">Configuring DataJoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-python.html#changing-password">Changing password</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html">Installing DataJoint for MATLAB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#installing-the-datajoint-toolbox">Installing the DataJoint Toolbox</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#upgrading-datajoint">Upgrading DataJoint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#configuring-datajoint">Configuring DataJoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#changing-password">Changing password</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">First Steps</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Building your first data pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#what-s-covered-in-this-tutorial">What’s covered in this tutorial?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#designing-data-pipelines-for-your-experiments">Designing data pipelines for your experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html#building-in-python">Building in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../python/first-table.html">Defining your first table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python/first-table.html#creating-a-schema">Creating a schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/first-table.html#defining-the-mouse-table-class">Defining the Mouse table class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../python/first-table.html#table-classes">Table classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/first-table.html#table-definition">Table definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/first-table.html#defining-a-table-in-a-schema">Defining a table in a schema</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../python/first-table.html#creating-the-table-in-the-data-pipeline">Creating the table in the data pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/first-table.html#what-if-i-make-a-mistake">What if I make a mistake?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/first-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../python/inserting-data.html">Populating the table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python/inserting-data.html#inserting-one-entry-at-a-time">Inserting one entry at a time</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../python/inserting-data.html#inserting-a-tuple-list">Inserting a tuple/list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/inserting-data.html#inserting-a-dictionary">Inserting a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../python/inserting-data.html#inserting-multiple-entries-at-a-time">Inserting multiple entries at a time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/inserting-data.html#data-integrity">Data integrity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/inserting-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../python/save-tables.html">Saving your data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python/save-tables.html#where-is-my-data-pipeline-stored">Where is my data pipeline stored?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/save-tables.html#saving-your-table-code">Saving your table code</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../python/save-tables.html#defining-your-table-module">Defining your table module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../python/save-tables.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../python/querying-data.html">Querying and fetching data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python/querying-data.html#fetching-all-the-data">Fetching all the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/querying-data.html#fetching-specific-attributes">Fetching specific attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/querying-data.html#querying-data">Querying Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../python/querying-data.html#restricting-by-attribute-value">Restricting by attribute value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/querying-data.html#using-inequality-in-restriction">Using inequality in restriction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/querying-data.html#combining-restrictions">Combining restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/querying-data.html#restricting-by-a-dictionary">Restricting by a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../python/querying-data.html#fetching-query-results">Fetching query results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/querying-data.html#deleting-entires">Deleting entires</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/querying-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../python/child-table.html">Defining dependent table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python/child-table.html#defining-session-table">Defining <code class="docutils literal notranslate"><span class="pre">Session</span></code> table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../python/child-table.html#for-dependency-specification"><code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> for dependency specification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../python/child-table.html#dependency-in-action">Dependency in action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/child-table.html#integrity-with-table-dependencies">Integrity with table dependencies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../python/child-table.html#deleting-dependent-entries">Deleting dependent entries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../python/child-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../python/more-queries.html">Queries with multiple tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python/more-queries.html#restriction-by-other-table">Restriction by other table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../python/more-queries.html#combining-restricitions">Combining restricitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../python/more-queries.html#difference-operator">Difference Operator <code class="docutils literal notranslate"><span class="pre">-</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/more-queries.html#join-operator">Join operator <code class="docutils literal notranslate"><span class="pre">*</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/more-queries.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../python/importing-data.html">Importing data into a table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python/importing-data.html#setting-up-tables">Setting up tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/importing-data.html#getting-the-data">Getting the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../python/importing-data.html#macos">MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/importing-data.html#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/importing-data.html#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../python/importing-data.html#data-files">Data files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/importing-data.html#imported-table">Imported table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/importing-data.html#populate-method"><code class="docutils literal notranslate"><span class="pre">populate</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/importing-data.html#implementing-make">Implementing <code class="docutils literal notranslate"><span class="pre">make</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/importing-data.html#populating-neuron-table">Populating <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/importing-data.html#multiple-calls-to-populate">Multiple calls to populate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/importing-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../python/computed-table.html">Computation in data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python/computed-table.html#computing-statistics-on-neural-activities">Computing statistics on neural activities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../python/computed-table.html#computed-tables">Computed tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/computed-table.html#computing-neuron-activity-statistics">Computing neuron activity statistics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/computed-table.html#populating-neuron-statistics">Populating neuron statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../python/computed-table.html#detecting-spikes-from-neural-activity">Detecting spikes from neural activity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../python/computed-table.html#defining-lookup-tables">Defining Lookup tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/computed-table.html#defining-spikedetection-table">Defining <code class="docutils literal notranslate"><span class="pre">SpikeDetection</span></code> table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/computed-table.html#populating-spikes">Populating <code class="docutils literal notranslate"><span class="pre">Spikes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../python/computed-table.html#seeing-them-all-together">Seeing them all together</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../python/computed-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html#building-in-matlab">Building in MATLAB</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="first-table.html">Defining your first table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#creating-a-schema">Creating a schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#defining-the-mouse-table-class">Defining the Mouse table class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#table-classes">Table classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#table-definition">Table definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#defining-a-table-in-a-schema">Defining a table in a schema</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#creating-the-table-in-the-data-pipeline">Creating the table in the data pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#what-if-i-make-a-mistake">What if I make a mistake?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#where-is-my-data-pipeline-stored">Where is my data pipeline stored?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inserting-data.html">Populating the table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#inserting-one-entry-at-a-time">Inserting one entry at a time</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="inserting-data.html#inserting-a-tuple-list">Inserting a tuple/list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inserting-data.html#inserting-a-structure">Inserting a structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#inserting-multiple-entries-at-a-time">Inserting multiple entries at a time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#data-integrity">Data integrity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="querying-data.html">Querying and fetching data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-all-the-data">Fetching all the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-specific-attributes">Fetching specific attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#querying-data">Querying Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#restricting-by-attribute-value">Restricting by attribute value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#using-inequality-in-restriction">Using inequality in restriction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#combining-restrictions">Combining restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#restricting-by-a-structure">Restricting by a structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-query-results">Fetching query results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#deleting-entries">Deleting entries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="child-table.html">Defining dependent tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#defining-tutorial-session-table">Defining <code class="docutils literal notranslate"><span class="pre">tutorial.Session</span></code> table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="child-table.html#for-dependency-specification"><code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> for dependency specification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#dependency-in-action">Dependency in action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#integrity-with-table-dependencies">Integrity with table dependencies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="child-table.html#deleting-dependent-entries">Deleting dependent entries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Queries with multiple tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#restriction-by-other-table">Restriction by other table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#combining-restrictions">Combining restrictions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#difference-operator">Difference Operator <code class="docutils literal notranslate"><span class="pre">-</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#join-operator">Join operator <code class="docutils literal notranslate"><span class="pre">*</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="importing-data.html">Importing data into a table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#setting-up-tables">Setting up tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#getting-the-data">Getting the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="importing-data.html#macos">MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="importing-data.html#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="importing-data.html#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#data-files">Data files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#imported-table">Imported table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#populate-method"><code class="docutils literal notranslate"><span class="pre">populate</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#implementing-maketuples">Implementing <code class="docutils literal notranslate"><span class="pre">makeTuples</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#populating-neuron-table">Populating <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#multiple-calls-to-populate">Multiple calls to populate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="computed-table.html">Computation in data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="computed-table.html#performing-computation-on-data">Performing computation on data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#defining-computed-tables">Defining computed tables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="computed-table.html#detecting-spikes-from-neural-activity">Detecting spikes from neural activity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#defining-lookup-tables">Defining Lookup tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#defining-spikes-table">Defining <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#populating-spikes">Populating <code class="docutils literal notranslate"><span class="pre">Spikes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#seeing-them-all-together">Seeing them all together</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="computed-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataJoint Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Building your first data pipeline</a> &raquo;</li>
+      <li>Queries with multiple tables</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/beginner/building-first-pipeline/matlab/more-queries.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="queries-with-multiple-tables">
+<h1>Queries with multiple tables<a class="headerlink" href="#queries-with-multiple-tables" title="Permalink to this headline"></a></h1>
+<p>Now that we have more than one table in our data pipeline, you can perform more exciting queries!
+In this section, we’ll take a look at how we can form queries using multiple tables, and we’ll
+look at a few new exciting query operators as well!</p>
+<section id="restriction-by-other-table">
+<h2>Restriction by other table<a class="headerlink" href="#restriction-by-other-table" title="Permalink to this headline"></a></h2>
+<p>In <a class="reference internal" href="querying-data.html"><span class="doc">Querying and fetching data</span></a>, we have seen how you can <strong>restrict</strong> a table by strings and/or dictionaries
+to narrow down the query results, returning only the entries that you are interested in. For example,
+you can find all male mice with:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Mouse</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&#39;sex=&quot;M&quot;&#39;</span><span class="w"></span>
+
+<span class="nb">ans</span><span class="w"> </span><span class="p">=</span><span class="w"></span>
+
+
+<span class="n">Object</span><span class="w"> </span><span class="s">tutorial.Mouse</span><span class="w"></span>
+
+<span class="p">::</span><span class="w"> </span><span class="n">mouse</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="p">::</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">MOUSE_ID</span><span class="w">        </span><span class="n">dob</span><span class="w">         </span><span class="n">sex</span><span class="w"></span>
+<span class="w">  </span><span class="n">________</span><span class="w">    </span><span class="n">____________</span><span class="w">    </span><span class="n">___</span><span class="w"></span>
+
+<span class="w">  </span><span class="mi">0</span><span class="w">           </span><span class="s">&#39;2017-03-01&#39;</span><span class="w">    </span><span class="s">&#39;M&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="mi">1</span><span class="w">           </span><span class="s">&#39;2016-11-19&#39;</span><span class="w">    </span><span class="s">&#39;M&#39;</span><span class="w"></span>
+
+<span class="n">2</span><span class="w"> </span><span class="s">tuples</span><span class="w"> </span><span class="s">(0.0254</span><span class="w"> </span><span class="s">s)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>It turns out that we can also use <strong>another table</strong> to restrict a table in a query! Consider the <code class="docutils literal notranslate"><span class="pre">Session</span></code>
+table that we created in <a class="reference internal" href="child-table.html"><span class="doc">Defining dependent tables</span></a>.</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Session</span><span class="w"></span>
+
+<span class="w"> </span><span class="nb">ans</span><span class="w"> </span><span class="p">=</span><span class="w"></span>
+
+
+<span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Session</span><span class="w"></span>
+
+<span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">experiment</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="p">::</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">MOUSE_ID</span><span class="w">    </span><span class="n">SESSION_DATE</span><span class="w">    </span><span class="n">experiment_setup</span><span class="w">     </span><span class="n">experimenter</span><span class="w"></span>
+<span class="w">   </span><span class="n">________</span><span class="w">    </span><span class="n">____________</span><span class="w">    </span><span class="n">________________</span><span class="w">    </span><span class="n">______________</span><span class="w"></span>
+
+<span class="w">     </span><span class="mi">0</span><span class="w">         </span><span class="s">&#39;2017-05-15&#39;</span><span class="w">    </span><span class="mi">0</span><span class="w">                   </span><span class="s">&#39;Edgar Walker&#39;</span><span class="w"></span>
+<span class="w">     </span><span class="mi">0</span><span class="w">         </span><span class="s">&#39;2017-05-19&#39;</span><span class="w">    </span><span class="mi">0</span><span class="w">                   </span><span class="s">&#39;Edgar Walker&#39;</span><span class="w"></span>
+<span class="w">     </span><span class="mi">5</span><span class="w">         </span><span class="s">&#39;2017-01-05&#39;</span><span class="w">    </span><span class="mi">1</span><span class="w">                   </span><span class="s">&#39;Fabian Sinz&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="mi">100</span><span class="w">         </span><span class="s">&#39;2017-05-25&#39;</span><span class="w">    </span><span class="mi">1</span><span class="w">                   </span><span class="s">&#39;Jake Reimer&#39;</span><span class="w"></span>
+
+<span class="n">4</span><span class="w"> </span><span class="s">tuples</span><span class="w"> </span><span class="s">(0.0172</span><span class="w"> </span><span class="s">s)</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Notice that we have added a few more entries into the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table using insert methods covered
+in <a class="reference internal" href="inserting-data.html"><span class="doc">Populating the table</span></a>. Go ahead and add more entries into the table before proceeding.</p>
+</div>
+<p>We can ask questions like “What are all the mice that I have at least done at least one experiment on?” by
+restricting a table with another table:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Mouse</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Session</span><span class="w"></span>
+
+<span class="w"> </span><span class="nb">ans</span><span class="w"> </span><span class="p">=</span><span class="w"></span>
+
+
+<span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Mouse</span><span class="w"></span>
+
+<span class="p">::</span><span class="w"> </span><span class="n">mouse</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="p">::</span><span class="w"></span>
+
+<span class="w">   </span><span class="n">MOUSE_ID</span><span class="w">        </span><span class="n">dob</span><span class="w">         </span><span class="n">sex</span><span class="w"></span>
+<span class="w">   </span><span class="n">________</span><span class="w">    </span><span class="n">____________</span><span class="w">    </span><span class="n">___</span><span class="w"></span>
+
+<span class="w">     </span><span class="mi">0</span><span class="w">         </span><span class="s">&#39;2017-03-01&#39;</span><span class="w">    </span><span class="s">&#39;M&#39;</span><span class="w"></span>
+<span class="w">     </span><span class="mi">5</span><span class="w">         </span><span class="s">&#39;2016-12-25&#39;</span><span class="w">    </span><span class="s">&#39;F&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="mi">100</span><span class="w">         </span><span class="s">&#39;2017-05-12&#39;</span><span class="w">    </span><span class="s">&#39;F&#39;</span><span class="w"></span>
+
+<span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">tuples</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0379</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>and there it goes! Restricting a table <code class="docutils literal notranslate"><span class="pre">A</span></code> with another table <code class="docutils literal notranslate"><span class="pre">B</span></code> asin <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&amp;</span> <span class="pre">B</span></code> returns all entries in
+<code class="docutils literal notranslate"><span class="pre">A</span></code> with corresponding entries in <code class="docutils literal notranslate"><span class="pre">B</span></code>!</p>
+<section id="combining-restrictions">
+<h3>Combining restrictions<a class="headerlink" href="#combining-restrictions" title="Permalink to this headline"></a></h3>
+<p>We can now combine multiple restrictions to get more complex queries intuitively!
+Let’s take a look at a few examples:</p>
+<p><strong>Q.</strong> Give me all sessions recorded for male mice</p>
+<p><strong>A.</strong> We can first get all male mice, and then get sessions corresponding to them.</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">male_mice</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Mouse</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&#39;sex = &quot;M&quot;&#39;</span><span class="w">  </span><span class="c">% get all male mice</span><span class="w"></span>
+
+<span class="n">male_mice</span><span class="w"> </span><span class="p">=</span><span class="w"></span>
+
+
+<span class="n">Object</span><span class="w"> </span><span class="s">tutorial.Mouse</span><span class="w"></span>
+
+<span class="p">::</span><span class="w"> </span><span class="n">mouse</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="p">::</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">MOUSE_ID</span><span class="w">        </span><span class="n">dob</span><span class="w">         </span><span class="n">sex</span><span class="w"></span>
+<span class="w">  </span><span class="n">________</span><span class="w">    </span><span class="n">____________</span><span class="w">    </span><span class="n">___</span><span class="w"></span>
+
+<span class="w">  </span><span class="mi">0</span><span class="w">           </span><span class="s">&#39;2017-03-01&#39;</span><span class="w">    </span><span class="s">&#39;M&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="mi">1</span><span class="w">           </span><span class="s">&#39;2016-11-19&#39;</span><span class="w">    </span><span class="s">&#39;M&#39;</span><span class="w"></span>
+
+<span class="n">2</span><span class="w"> </span><span class="s">tuples</span><span class="w"> </span><span class="s">(0.0159</span><span class="w"> </span><span class="s">s)</span><span class="w"></span>
+
+<span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Session</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">male_mice</span><span class="w"></span>
+
+<span class="nb">ans</span><span class="w"> </span><span class="p">=</span><span class="w"></span>
+
+
+<span class="n">Object</span><span class="w"> </span><span class="s">tutorial.Session</span><span class="w"></span>
+
+<span class="p">::</span><span class="w"> </span><span class="n">experiment</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="p">::</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">MOUSE_ID</span><span class="w">    </span><span class="n">SESSION_DATE</span><span class="w">    </span><span class="n">experiment_setup</span><span class="w">     </span><span class="n">experimenter</span><span class="w"></span>
+<span class="w">  </span><span class="n">________</span><span class="w">    </span><span class="n">____________</span><span class="w">    </span><span class="n">________________</span><span class="w">    </span><span class="n">______________</span><span class="w"></span>
+
+<span class="w">  </span><span class="mi">0</span><span class="w">           </span><span class="s">&#39;2017-05-15&#39;</span><span class="w">    </span><span class="mi">0</span><span class="w">                   </span><span class="s">&#39;Edgar Walker&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="mi">0</span><span class="w">           </span><span class="s">&#39;2017-05-19&#39;</span><span class="w">    </span><span class="mi">0</span><span class="w">                   </span><span class="s">&#39;Edgar Walker&#39;</span><span class="w"></span>
+
+<span class="n">2</span><span class="w"> </span><span class="s">tuples</span><span class="w"> </span><span class="s">(0.0336</span><span class="w"> </span><span class="s">s)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>or you could have combine this into one statement as in:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Session</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">tutorial</span><span class="p">.</span><span class="n">Mouse</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&#39;sex = &quot;M&quot;&#39;</span><span class="p">)</span><span class="w"></span>
+
+<span class="nb">ans</span><span class="w"> </span><span class="p">=</span><span class="w"></span>
+
+
+<span class="n">Object</span><span class="w"> </span><span class="s">tutorial.Session</span><span class="w"></span>
+
+<span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">experiment</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="p">::</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">MOUSE_ID</span><span class="w">    </span><span class="n">SESSION_DATE</span><span class="w">    </span><span class="n">experiment_setup</span><span class="w">     </span><span class="n">experimenter</span><span class="w"></span>
+<span class="w">  </span><span class="n">________</span><span class="w">    </span><span class="n">____________</span><span class="w">    </span><span class="n">________________</span><span class="w">    </span><span class="n">______________</span><span class="w"></span>
+
+<span class="w">  </span><span class="mi">0</span><span class="w">           </span><span class="s">&#39;2017-05-15&#39;</span><span class="w">    </span><span class="mi">0</span><span class="w">                   </span><span class="s">&#39;Edgar Walker&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="mi">0</span><span class="w">           </span><span class="s">&#39;2017-05-19&#39;</span><span class="w">    </span><span class="mi">0</span><span class="w">                   </span><span class="s">&#39;Edgar Walker&#39;</span><span class="w"></span>
+
+<span class="n">2</span><span class="w"> </span><span class="s">tuples</span><span class="w"> </span><span class="s">(0.0286</span><span class="w"> </span><span class="s">s)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>As you get used to the DataJoint queries, you will quickly learn to read above queries as
+“all sessions for male mice”!</p>
+<p><strong>Q.</strong> Give me all mice that have had an experimental session done on or after 2017-05-19</p>
+<p><strong>A.</strong> Again we can break this into parts first - get all sessions done on or after 2017-05-19 and then
+find all mice corresponding to those sessions. Or simply do it in one statement:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Mouse</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">tutorial</span><span class="p">.</span><span class="n">Session</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&#39;session_date &gt;= &quot;2017-05-19&quot;&#39;</span><span class="p">)</span><span class="w"></span>
+
+<span class="nb">ans</span><span class="w"> </span><span class="p">=</span><span class="w"></span>
+
+
+<span class="n">Object</span><span class="w"> </span><span class="s">tutorial.Mouse</span><span class="w"></span>
+
+<span class="p">::</span><span class="w"> </span><span class="n">mouse</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="p">::</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">MOUSE_ID</span><span class="w">        </span><span class="n">dob</span><span class="w">         </span><span class="n">sex</span><span class="w"></span>
+<span class="w">  </span><span class="n">________</span><span class="w">    </span><span class="n">____________</span><span class="w">    </span><span class="n">___</span><span class="w"></span>
+
+<span class="w">    </span><span class="mi">0</span><span class="w">         </span><span class="s">&#39;2017-03-01&#39;</span><span class="w">    </span><span class="s">&#39;M&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="mi">100</span><span class="w">         </span><span class="s">&#39;2017-05-12&#39;</span><span class="w">    </span><span class="s">&#39;F&#39;</span><span class="w"></span>
+
+<span class="n">2</span><span class="w"> </span><span class="s">tuples</span><span class="w"> </span><span class="s">(0.0264</span><span class="w"> </span><span class="s">s)</span><span class="w"></span>
+</pre></div>
+</div>
+<p><strong>Q.</strong> I want to know all <strong>female mice</strong> that have an experiment <strong>performed before 2017-05-20</strong></p>
+<p><strong>A.</strong> This hs more parts but you can again break things up in a couple of way. For example,
+you can first look for all female mice and then restrict by all sessions performed before 2017-05-20. Or, once again you could express the query in a single line without losing much readability.</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Mouse</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&#39;sex=&quot;F&quot;&#39;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">tutorial</span><span class="p">.</span><span class="n">Session</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&#39;session_date&lt;&quot;2017-05-20&quot;&#39;</span><span class="p">)</span><span class="w"></span>
+
+<span class="nb">ans</span><span class="w"> </span><span class="p">=</span><span class="w"></span>
+
+
+<span class="n">Object</span><span class="w"> </span><span class="s">tutorial.Mouse</span><span class="w"></span>
+
+<span class="p">::</span><span class="w"> </span><span class="n">mouse</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="p">::</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">MOUSE_ID</span><span class="w">       </span><span class="n">dob</span><span class="w">        </span><span class="n">sex</span><span class="w"></span>
+<span class="w">  </span><span class="n">________</span><span class="w">    </span><span class="n">__________</span><span class="w">    </span><span class="n">___</span><span class="w"></span>
+
+<span class="w">  </span><span class="mi">5</span><span class="w">           </span><span class="mi">2016</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">25</span><span class="w">    </span><span class="n">F</span><span class="w"></span>
+
+<span class="n">1</span><span class="w"> </span><span class="s">tuples</span><span class="w"> </span><span class="s">(0.0345</span><span class="w"> </span><span class="s">s)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Let’s now take a look at one more example.</p>
+<p><strong>Q.</strong> I want all mouse that has <strong>no</strong> experiment sessions performed on it yet.</p>
+<p><strong>A.</strong> Aha! This is one example that would be rather difficult to obtain with what we know already, but there is
+an operator just for this - the difference operator <code class="docutils literal notranslate"><span class="pre">-</span></code></p>
+</section>
+</section>
+<section id="difference-operator">
+<h2>Difference Operator <code class="docutils literal notranslate"><span class="pre">-</span></code><a class="headerlink" href="#difference-operator" title="Permalink to this headline"></a></h2>
+<p>Sometimes you want to find entries that do <strong>not</strong> have any matching entries in another table. Well, DataJoint
+has an operator just for that! You can use the difference <code class="docutils literal notranslate"><span class="pre">-</span></code> operator to find entries that does <strong>not</strong> have
+a corresponding entry in another table! Let’s see how we can use this to find “all mice without experiement session”</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Mouse</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Session</span><span class="w"></span>
+
+<span class="nb">ans</span><span class="w"> </span><span class="p">=</span><span class="w"></span>
+
+
+<span class="n">Object</span><span class="w"> </span><span class="s">tutorial.Mouse</span><span class="w"></span>
+
+<span class="p">::</span><span class="w"> </span><span class="n">mouse</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="p">::</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">MOUSE_ID</span><span class="w">        </span><span class="n">dob</span><span class="w">         </span><span class="n">sex</span><span class="w"></span>
+<span class="w">  </span><span class="n">________</span><span class="w">    </span><span class="n">____________</span><span class="w">    </span><span class="n">___</span><span class="w"></span>
+
+<span class="w">   </span><span class="mi">1</span><span class="w">          </span><span class="s">&#39;2016-11-19&#39;</span><span class="w">    </span><span class="s">&#39;M&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="mi">2</span><span class="w">          </span><span class="s">&#39;2016-11-20&#39;</span><span class="w">    </span><span class="s">&#39;U&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="mi">10</span><span class="w">          </span><span class="s">&#39;2017-01-01&#39;</span><span class="w">    </span><span class="s">&#39;F&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="mi">11</span><span class="w">          </span><span class="s">&#39;2017-01-03&#39;</span><span class="w">    </span><span class="s">&#39;F&#39;</span><span class="w"></span>
+
+<span class="n">4</span><span class="w"> </span><span class="s">tuples</span><span class="w"> </span><span class="s">(0.0396</span><span class="w"> </span><span class="s">s)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>and that’s it! When you say <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">-</span> <span class="pre">B</span></code>, you find all entries in <code class="docutils literal notranslate"><span class="pre">A</span></code> that does <strong>not</strong> have a corresponding entries
+in <code class="docutils literal notranslate"><span class="pre">B</span></code>. The difference operator comes in really handy when you want to look for things like missing entries
+just like we did.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike restriction <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, the difference operator <code class="docutils literal notranslate"><span class="pre">-</span></code> only works on tables. If you want to negate the
+condition when restricting by a string (e.g. <code class="docutils literal notranslate"><span class="pre">sex</span> <span class="pre">=</span> <span class="pre">&quot;M&quot;</span></code>), simply the negate the statement itself
+(e.g. <code class="docutils literal notranslate"><span class="pre">sex</span> <span class="pre">!=</span> <span class="pre">&quot;M&quot;</span></code>).</p>
+</div>
+<p>We will wrap up this section by covering one more of the basic but very powerful query operator - join <code class="docutils literal notranslate"><span class="pre">*</span></code>.</p>
+</section>
+<section id="join-operator">
+<span id="matlab-join"></span><h2>Join operator <code class="docutils literal notranslate"><span class="pre">*</span></code><a class="headerlink" href="#join-operator" title="Permalink to this headline"></a></h2>
+<p>When working with multiple tables (as in the case of <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> and <code class="docutils literal notranslate"><span class="pre">Session</span></code>), you would sometimes wish to
+<strong>combine</strong> these tables into one so that you have all information together. Well, there is an operator for
+that! The join operator <code class="docutils literal notranslate"><span class="pre">*</span></code> allows you to combine two tables by matching corresponding entries, returning
+you one table that has all columns from both tables. Let’s take a look at an example:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Mouse</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Session</span><span class="w"></span>
+
+<span class="nb">ans</span><span class="w"> </span><span class="p">=</span><span class="w"></span>
+
+
+<span class="n">Object</span><span class="w"> </span><span class="s">dj.GeneralRelvar</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">MOUSE_ID</span><span class="w">    </span><span class="n">SESSION_DATE</span><span class="w">        </span><span class="n">dob</span><span class="w">         </span><span class="n">sex</span><span class="w">    </span><span class="n">experiment_setup</span><span class="w">     </span><span class="n">experimenter</span><span class="w"></span>
+<span class="w">  </span><span class="n">________</span><span class="w">    </span><span class="n">____________</span><span class="w">    </span><span class="n">____________</span><span class="w">    </span><span class="n">___</span><span class="w">    </span><span class="n">________________</span><span class="w">    </span><span class="n">______________</span><span class="w"></span>
+
+<span class="w">    </span><span class="mi">0</span><span class="w">         </span><span class="s">&#39;2017-05-15&#39;</span><span class="w">    </span><span class="s">&#39;2017-03-01&#39;</span><span class="w">    </span><span class="s">&#39;M&#39;</span><span class="w">    </span><span class="mi">0</span><span class="w">                   </span><span class="s">&#39;Edgar Walker&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="mi">0</span><span class="w">         </span><span class="s">&#39;2017-05-19&#39;</span><span class="w">    </span><span class="s">&#39;2017-03-01&#39;</span><span class="w">    </span><span class="s">&#39;M&#39;</span><span class="w">    </span><span class="mi">0</span><span class="w">                   </span><span class="s">&#39;Edgar Walker&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="mi">5</span><span class="w">         </span><span class="s">&#39;2017-01-05&#39;</span><span class="w">    </span><span class="s">&#39;2016-12-25&#39;</span><span class="w">    </span><span class="s">&#39;F&#39;</span><span class="w">    </span><span class="mi">1</span><span class="w">                   </span><span class="s">&#39;Fabian Sinz&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="mi">100</span><span class="w">         </span><span class="s">&#39;2017-05-25&#39;</span><span class="w">    </span><span class="s">&#39;2017-05-12&#39;</span><span class="w">    </span><span class="s">&#39;F&#39;</span><span class="w">    </span><span class="mi">1</span><span class="w">                   </span><span class="s">&#39;Jake Reimer&#39;</span><span class="w"></span>
+
+<span class="n">4</span><span class="w"> </span><span class="s">tuples</span><span class="w"> </span><span class="s">(0.0653</span><span class="w"> </span><span class="s">s)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Notice that you are returne a single table with columns from both the <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> and the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table,
+giving you all the information you want! You might have noticed that this does <strong>not</strong> list all mice, however.</p>
+<p>Why is that? This is because join <code class="docutils literal notranslate"><span class="pre">*</span></code> only combines the <strong>matching</strong> entries from the two tables. Because some
+mice did not have matching entries in the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table (e.g. <code class="docutils literal notranslate"><span class="pre">mouse_id</span> <span class="pre">=</span> <span class="pre">2</span></code>), it was left out from the
+join results. This policy ensures that the returned joined table will not have any missing entries.</p>
+<p>You can easily use the result of the join in further queries. For example, we can find all mouse-session combination
+for male mice with experiment session performed on or after 2017-05-19:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Mouse</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tutorial</span><span class="p">.</span><span class="n">Session</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&#39;sex=&quot;M&quot;&#39;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&#39;session_date &gt;=&quot;2017-05-19&quot;&#39;</span><span class="w"></span>
+
+<span class="nb">ans</span><span class="w"> </span><span class="p">=</span><span class="w"></span>
+
+
+<span class="n">Object</span><span class="w"> </span><span class="s">dj.GeneralRelvar</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">MOUSE_ID</span><span class="w">    </span><span class="n">SESSION_DATE</span><span class="w">       </span><span class="n">dob</span><span class="w">        </span><span class="n">sex</span><span class="w">    </span><span class="n">experiment_setup</span><span class="w">    </span><span class="n">experimenter</span><span class="w"></span>
+<span class="w">  </span><span class="n">________</span><span class="w">    </span><span class="n">____________</span><span class="w">    </span><span class="n">__________</span><span class="w">    </span><span class="n">___</span><span class="w">    </span><span class="n">________________</span><span class="w">    </span><span class="n">____________</span><span class="w"></span>
+
+<span class="w">  </span><span class="mi">0</span><span class="w">           </span><span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">19</span><span class="w">      </span><span class="mi">2017</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span><span class="w">    </span><span class="n">M</span><span class="w">      </span><span class="mi">0</span><span class="w">                     </span><span class="p">[</span>1<span class="n">x12</span><span class="w"> </span><span class="nb">char</span><span class="p">]</span><span class="w"></span>
+
+<span class="n">1</span><span class="w"> </span><span class="s">tuples</span><span class="w"> </span><span class="s">(0.0439</span><span class="w"> </span><span class="s">s)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Notice how we were able to use attributes from both <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> (<code class="docutils literal notranslate"><span class="pre">sex</span></code>) and <code class="docutils literal notranslate"><span class="pre">Session</span></code> (<code class="docutils literal notranslate"><span class="pre">session_date</span></code>)
+together.</p>
+</section>
+<section id="what-s-next">
+<h2>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline"></a></h2>
+<p>Phew! That was a lot of material but hopefully you saw how you can form powerful queries using DataJoint’s
+intuitive query language! Go ahead and spend some more time playing with the queries and see if you can come
+up with queries to answer any question you can ask about your data! In the <a class="reference internal" href="importing-data.html"><span class="doc">next section</span></a>
+we will look into building a table that can load external data automatically!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="child-table.html" class="btn btn-neutral float-left" title="Defining dependent tables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="importing-data.html" class="btn btn-neutral float-right" title="Importing data into a table" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, DataJoint Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

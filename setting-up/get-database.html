@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting connected to a database &mdash; DataJoint Tutorials  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/datajoint_theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Setting Up a Local Database Server" href="local-database.html" />
+    <link rel="prev" title="Setting up for DataJoint" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/djTutorialLogoWhite.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Setting up for DataJoint</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting connected to a database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#connect-to-datajoint-io-recommended">Connect to DataJoint.io (Recommended)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#signing-up-to-datajoint-io-account">Signing up to DataJoint.io account</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-a-local-database-server-intermediate">Setting up a local database server (Intermediate)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="local-database.html">Setting Up a Local Database Server</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="local-database.html#setting-up-database-using-docker">Setting up database using Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="local-database.html#why-docker">Why Docker?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="local-database.html#installing-docker">Installing Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="local-database.html#launching-a-database-server">Launching a database server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="local-database.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-a-database-server-on-another-machine-advanced">Setting up a database server on another machine (Advanced)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datajoint-python.html">Installing DataJoint for Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datajoint-python.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datajoint-python.html#installing-the-datajoint-package">Installing the DataJoint Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datajoint-python.html#upgrading-datajoint">Upgrading DataJoint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datajoint-python.html#configuring-datajoint">Configuring DataJoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datajoint-python.html#changing-password">Changing password</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datajoint-python.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datajoint-matlab.html">Installing DataJoint for MATLAB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datajoint-matlab.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datajoint-matlab.html#installing-the-datajoint-toolbox">Installing the DataJoint Toolbox</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datajoint-matlab.html#upgrading-datajoint">Upgrading DataJoint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datajoint-matlab.html#configuring-datajoint">Configuring DataJoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datajoint-matlab.html#changing-password">Changing password</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datajoint-matlab.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">First Steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../beginner/building-first-pipeline/index.html">Building your first data pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/index.html#what-s-covered-in-this-tutorial">What’s covered in this tutorial?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/index.html#designing-data-pipelines-for-your-experiments">Designing data pipelines for your experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../beginner/building-first-pipeline/index.html#building-in-python">Building in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/python/first-table.html">Defining your first table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/first-table.html#creating-a-schema">Creating a schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/first-table.html#defining-the-mouse-table-class">Defining the Mouse table class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/first-table.html#table-classes">Table classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/first-table.html#table-definition">Table definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/first-table.html#defining-a-table-in-a-schema">Defining a table in a schema</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/first-table.html#creating-the-table-in-the-data-pipeline">Creating the table in the data pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/first-table.html#what-if-i-make-a-mistake">What if I make a mistake?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/first-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/python/inserting-data.html">Populating the table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/inserting-data.html#inserting-one-entry-at-a-time">Inserting one entry at a time</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/inserting-data.html#inserting-a-tuple-list">Inserting a tuple/list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/inserting-data.html#inserting-a-dictionary">Inserting a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/inserting-data.html#inserting-multiple-entries-at-a-time">Inserting multiple entries at a time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/inserting-data.html#data-integrity">Data integrity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/inserting-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/python/save-tables.html">Saving your data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/save-tables.html#where-is-my-data-pipeline-stored">Where is my data pipeline stored?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/save-tables.html#saving-your-table-code">Saving your table code</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/save-tables.html#defining-your-table-module">Defining your table module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/save-tables.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/python/querying-data.html">Querying and fetching data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/querying-data.html#fetching-all-the-data">Fetching all the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/querying-data.html#fetching-specific-attributes">Fetching specific attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/querying-data.html#querying-data">Querying Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/querying-data.html#restricting-by-attribute-value">Restricting by attribute value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/querying-data.html#using-inequality-in-restriction">Using inequality in restriction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/querying-data.html#combining-restrictions">Combining restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/querying-data.html#restricting-by-a-dictionary">Restricting by a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/querying-data.html#fetching-query-results">Fetching query results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/querying-data.html#deleting-entires">Deleting entires</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/querying-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/python/child-table.html">Defining dependent table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/child-table.html#defining-session-table">Defining <code class="docutils literal notranslate"><span class="pre">Session</span></code> table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/child-table.html#for-dependency-specification"><code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> for dependency specification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/child-table.html#dependency-in-action">Dependency in action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/child-table.html#integrity-with-table-dependencies">Integrity with table dependencies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/child-table.html#deleting-dependent-entries">Deleting dependent entries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/child-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/python/more-queries.html">Queries with multiple tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/more-queries.html#restriction-by-other-table">Restriction by other table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/more-queries.html#combining-restricitions">Combining restricitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/more-queries.html#difference-operator">Difference Operator <code class="docutils literal notranslate"><span class="pre">-</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/more-queries.html#join-operator">Join operator <code class="docutils literal notranslate"><span class="pre">*</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/more-queries.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html">Importing data into a table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#setting-up-tables">Setting up tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#getting-the-data">Getting the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#macos">MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#data-files">Data files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#imported-table">Imported table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#populate-method"><code class="docutils literal notranslate"><span class="pre">populate</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#implementing-make">Implementing <code class="docutils literal notranslate"><span class="pre">make</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#populating-neuron-table">Populating <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#multiple-calls-to-populate">Multiple calls to populate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/importing-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/python/computed-table.html">Computation in data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/computed-table.html#computing-statistics-on-neural-activities">Computing statistics on neural activities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/computed-table.html#computed-tables">Computed tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/computed-table.html#computing-neuron-activity-statistics">Computing neuron activity statistics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/computed-table.html#populating-neuron-statistics">Populating neuron statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/computed-table.html#detecting-spikes-from-neural-activity">Detecting spikes from neural activity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/computed-table.html#defining-lookup-tables">Defining Lookup tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/computed-table.html#defining-spikedetection-table">Defining <code class="docutils literal notranslate"><span class="pre">SpikeDetection</span></code> table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/computed-table.html#populating-spikes">Populating <code class="docutils literal notranslate"><span class="pre">Spikes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/python/computed-table.html#seeing-them-all-together">Seeing them all together</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/python/computed-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../beginner/building-first-pipeline/index.html#building-in-matlab">Building in MATLAB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/first-table.html">Defining your first table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/first-table.html#creating-a-schema">Creating a schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/first-table.html#defining-the-mouse-table-class">Defining the Mouse table class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/first-table.html#table-classes">Table classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/first-table.html#table-definition">Table definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/first-table.html#defining-a-table-in-a-schema">Defining a table in a schema</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/first-table.html#creating-the-table-in-the-data-pipeline">Creating the table in the data pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/first-table.html#what-if-i-make-a-mistake">What if I make a mistake?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/first-table.html#where-is-my-data-pipeline-stored">Where is my data pipeline stored?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/first-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/inserting-data.html">Populating the table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/inserting-data.html#inserting-one-entry-at-a-time">Inserting one entry at a time</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/inserting-data.html#inserting-a-tuple-list">Inserting a tuple/list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/inserting-data.html#inserting-a-structure">Inserting a structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/inserting-data.html#inserting-multiple-entries-at-a-time">Inserting multiple entries at a time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/inserting-data.html#data-integrity">Data integrity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/inserting-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/querying-data.html">Querying and fetching data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/querying-data.html#fetching-all-the-data">Fetching all the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/querying-data.html#fetching-specific-attributes">Fetching specific attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/querying-data.html#querying-data">Querying Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/querying-data.html#restricting-by-attribute-value">Restricting by attribute value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/querying-data.html#using-inequality-in-restriction">Using inequality in restriction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/querying-data.html#combining-restrictions">Combining restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/querying-data.html#restricting-by-a-structure">Restricting by a structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/querying-data.html#fetching-query-results">Fetching query results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/querying-data.html#deleting-entries">Deleting entries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/querying-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/child-table.html">Defining dependent tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/child-table.html#defining-tutorial-session-table">Defining <code class="docutils literal notranslate"><span class="pre">tutorial.Session</span></code> table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/child-table.html#for-dependency-specification"><code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> for dependency specification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/child-table.html#dependency-in-action">Dependency in action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/child-table.html#integrity-with-table-dependencies">Integrity with table dependencies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/child-table.html#deleting-dependent-entries">Deleting dependent entries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/child-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/more-queries.html">Queries with multiple tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/more-queries.html#restriction-by-other-table">Restriction by other table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/more-queries.html#combining-restrictions">Combining restrictions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/more-queries.html#difference-operator">Difference Operator <code class="docutils literal notranslate"><span class="pre">-</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/more-queries.html#join-operator">Join operator <code class="docutils literal notranslate"><span class="pre">*</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/more-queries.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html">Importing data into a table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#setting-up-tables">Setting up tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#getting-the-data">Getting the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#macos">MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#data-files">Data files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#imported-table">Imported table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#populate-method"><code class="docutils literal notranslate"><span class="pre">populate</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#implementing-maketuples">Implementing <code class="docutils literal notranslate"><span class="pre">makeTuples</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#populating-neuron-table">Populating <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#multiple-calls-to-populate">Multiple calls to populate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/importing-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/computed-table.html">Computation in data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/computed-table.html#performing-computation-on-data">Performing computation on data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/computed-table.html#defining-computed-tables">Defining computed tables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/computed-table.html#detecting-spikes-from-neural-activity">Detecting spikes from neural activity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/computed-table.html#defining-lookup-tables">Defining Lookup tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/computed-table.html#defining-spikes-table">Defining <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/computed-table.html#populating-spikes">Populating <code class="docutils literal notranslate"><span class="pre">Spikes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/computed-table.html#seeing-them-all-together">Seeing them all together</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../beginner/building-first-pipeline/matlab/computed-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DataJoint Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Getting connected to a database</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/setting-up/get-database.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-connected-to-a-database">
+<h1>Getting connected to a database<a class="headerlink" href="#getting-connected-to-a-database" title="Permalink to this headline"></a></h1>
+<p>In this section we will explore various options on how we can get connected to a database server
+for use throughout the tutorial and beyond. We will review three major options, from the easiest (and
+most recommended) to the more involved but highly customizable.</p>
+<section id="connect-to-datajoint-io-recommended">
+<h2>Connect to <a class="reference external" href="https://accounts.datajoint.io">DataJoint.io</a> (Recommended)<a class="headerlink" href="#connect-to-datajoint-io-recommended" title="Permalink to this headline"></a></h2>
+<p>If you want to get started trying out DataJoint as quickly as possible with minimal setup, sign up for a free
+<a class="reference external" href="https://accounts.datajoint.io/login">DataJoint account</a> to gain access to the free tutorial database server in addition
+to ready-to-play interactive Python playground environment based on Jupyter.</p>
+<p>Follow these simple instructions to sign up for DataJoint.io account with the access to the tutorial database.</p>
+<section id="signing-up-to-datajoint-io-account">
+<h3>Signing up to DataJoint.io account<a class="headerlink" href="#signing-up-to-datajoint-io-account" title="Permalink to this headline"></a></h3>
+<ol class="arabic simple">
+<li><p>Visit <a class="reference external" href="https://datajoint.io">https://datajoint.io</a> and click on the Sign Up button.</p></li>
+<li><p>Follow the instructions to complete the signup. You will receive an email as part of the signup process.</p></li>
+<li><p>Make note of your DataJoint.io username and password. This will be the username and password for the tutorial database.</p></li>
+</ol>
+<p>And that’s it!</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The tutorial database is provided for learning purpose only and may be periodically cleared to maintain availability
+for all DataJoint learners. Please <strong>DO NOT</strong> store any important data or information in the database!
+If you’re ready to move on to a persistent database server, refer to the section <a class="reference internal" href="#below">below</a> for setting up your own database server
+or seek for-charge hosting services offered by, for example, <a class="reference external" href="https://datajointneuro.io">DataJoint NEURO</a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you create a new schema, your schema must start with <code class="docutils literal notranslate"><span class="pre">username_</span></code> substituting in your DataJoint.io username. For
+an example, if you sign up with username <code class="docutils literal notranslate"><span class="pre">johndoe</span></code>, your schema name must start with <code class="docutils literal notranslate"><span class="pre">johndoe_</span></code> for you to have
+full control over tables defined in the schema. More details on this will be covered in the next section.</p>
+</div>
+<p>If you are interested in general database hosting service to host entire data pipelines for yourself, your lab, or large
+multi-lab collaborations, visit <a class="reference external" href="https://datajointneuro.io">https://datajointneuro.io</a> for more information.</p>
+</section>
+</section>
+<section id="setting-up-a-local-database-server-intermediate">
+<span id="below"></span><h2>Setting up a local database server (Intermediate)<a class="headerlink" href="#setting-up-a-local-database-server-intermediate" title="Permalink to this headline"></a></h2>
+<p>Alternatively you can install and set up a database server to run on your local machine. This offers a very
+portable solution, but it requires some additional steps to deploy the server. If you
+decide to go this route, we strongly recommend you use <a class="reference external" href="https://www.docker.com">Docker</a> to download
+and launch a pre-configured database server we have provided as a Docker image.</p>
+<p>You can find a step-by-step instructions on setting up a local database server using Docker in our
+<a class="reference internal" href="local-database.html"><span class="doc">Setting Up a Local Database Server</span></a> tutorial!</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="setting-up-a-database-server-on-another-machine-advanced">
+<h2>Setting up a database server on another machine (Advanced)<a class="headerlink" href="#setting-up-a-database-server-on-another-machine-advanced" title="Permalink to this headline"></a></h2>
+<p>Finally, you might want to set up a database server on dedicated server hardware.
+Properly setting up and maintaing a database server can require significant IT expertise and
+infrastructure, depending on the desired scale. If you are interested in pursuing this option, you can find useful
+configuration information at <a class="reference external" href="https://github.com/datajoint/mysql-docker">our MySQL Docker image project</a>.</p>
+</section>
+<section id="what-s-next">
+<h2>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline"></a></h2>
+<p>Once you have decided on your database server option and acquired access credentials, you are ready to move onto
+setting up DataJoint library in Python or MATLAB! Pick your favorite language for
+step-by-step instruction on installing and setting up DataJoint library.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="datajoint-python.html"><span class="doc">Installing DataJoint for Python</span></a></p></li>
+<li><p><a class="reference internal" href="datajoint-matlab.html"><span class="doc">Installing DataJoint for MATLAB</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction.html" class="btn btn-neutral float-left" title="Setting up for DataJoint" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="local-database.html" class="btn btn-neutral float-right" title="Setting Up a Local Database Server" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, DataJoint Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

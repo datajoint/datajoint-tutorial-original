@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Computation in data pipeline &mdash; DataJoint Tutorials  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/datajoint_theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Defining your first table" href="../matlab/first-table.html" />
+    <link rel="prev" title="Importing data into a table" href="importing-data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/djTutorialLogoWhite.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/introduction.html">Setting up for DataJoint</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/introduction.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/introduction.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/get-database.html">Getting connected to a database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#connect-to-datajoint-io-recommended">Connect to DataJoint.io (Recommended)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/get-database.html#signing-up-to-datajoint-io-account">Signing up to DataJoint.io account</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#setting-up-a-local-database-server-intermediate">Setting up a local database server (Intermediate)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/local-database.html">Setting Up a Local Database Server</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#setting-up-database-using-docker">Setting up database using Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#why-docker">Why Docker?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#installing-docker">Installing Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#launching-a-database-server">Launching a database server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#setting-up-a-database-server-on-another-machine-advanced">Setting up a database server on another machine (Advanced)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/datajoint-python.html">Installing DataJoint for Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#installing-the-datajoint-package">Installing the DataJoint Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-python.html#upgrading-datajoint">Upgrading DataJoint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#configuring-datajoint">Configuring DataJoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-python.html#changing-password">Changing password</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html">Installing DataJoint for MATLAB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#installing-the-datajoint-toolbox">Installing the DataJoint Toolbox</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#upgrading-datajoint">Upgrading DataJoint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#configuring-datajoint">Configuring DataJoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#changing-password">Changing password</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">First Steps</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Building your first data pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#what-s-covered-in-this-tutorial">What’s covered in this tutorial?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#designing-data-pipelines-for-your-experiments">Designing data pipelines for your experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html#building-in-python">Building in Python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="first-table.html">Defining your first table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#creating-a-schema">Creating a schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#defining-the-mouse-table-class">Defining the Mouse table class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#table-classes">Table classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#table-definition">Table definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#defining-a-table-in-a-schema">Defining a table in a schema</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#creating-the-table-in-the-data-pipeline">Creating the table in the data pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#what-if-i-make-a-mistake">What if I make a mistake?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inserting-data.html">Populating the table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#inserting-one-entry-at-a-time">Inserting one entry at a time</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="inserting-data.html#inserting-a-tuple-list">Inserting a tuple/list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inserting-data.html#inserting-a-dictionary">Inserting a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#inserting-multiple-entries-at-a-time">Inserting multiple entries at a time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#data-integrity">Data integrity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="save-tables.html">Saving your data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="save-tables.html#where-is-my-data-pipeline-stored">Where is my data pipeline stored?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="save-tables.html#saving-your-table-code">Saving your table code</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="save-tables.html#defining-your-table-module">Defining your table module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="save-tables.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="querying-data.html">Querying and fetching data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-all-the-data">Fetching all the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-specific-attributes">Fetching specific attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#querying-data">Querying Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#restricting-by-attribute-value">Restricting by attribute value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#using-inequality-in-restriction">Using inequality in restriction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#combining-restrictions">Combining restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#restricting-by-a-dictionary">Restricting by a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-query-results">Fetching query results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#deleting-entires">Deleting entires</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="child-table.html">Defining dependent table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#defining-session-table">Defining <code class="docutils literal notranslate"><span class="pre">Session</span></code> table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="child-table.html#for-dependency-specification"><code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> for dependency specification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#dependency-in-action">Dependency in action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#integrity-with-table-dependencies">Integrity with table dependencies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="child-table.html#deleting-dependent-entries">Deleting dependent entries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="more-queries.html">Queries with multiple tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#restriction-by-other-table">Restriction by other table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="more-queries.html#combining-restricitions">Combining restricitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#difference-operator">Difference Operator <code class="docutils literal notranslate"><span class="pre">-</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#join-operator">Join operator <code class="docutils literal notranslate"><span class="pre">*</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="importing-data.html">Importing data into a table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#setting-up-tables">Setting up tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#getting-the-data">Getting the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="importing-data.html#macos">MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="importing-data.html#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="importing-data.html#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#data-files">Data files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#imported-table">Imported table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#populate-method"><code class="docutils literal notranslate"><span class="pre">populate</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#implementing-make">Implementing <code class="docutils literal notranslate"><span class="pre">make</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#populating-neuron-table">Populating <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#multiple-calls-to-populate">Multiple calls to populate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Computation in data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#computing-statistics-on-neural-activities">Computing statistics on neural activities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#computed-tables">Computed tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#computing-neuron-activity-statistics">Computing neuron activity statistics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#populating-neuron-statistics">Populating neuron statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#detecting-spikes-from-neural-activity">Detecting spikes from neural activity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#defining-lookup-tables">Defining Lookup tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#defining-spikedetection-table">Defining <code class="docutils literal notranslate"><span class="pre">SpikeDetection</span></code> table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#populating-spikes">Populating <code class="docutils literal notranslate"><span class="pre">Spikes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seeing-them-all-together">Seeing them all together</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html#building-in-matlab">Building in MATLAB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/first-table.html">Defining your first table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#creating-a-schema">Creating a schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#defining-the-mouse-table-class">Defining the Mouse table class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/first-table.html#table-classes">Table classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/first-table.html#table-definition">Table definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/first-table.html#defining-a-table-in-a-schema">Defining a table in a schema</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#creating-the-table-in-the-data-pipeline">Creating the table in the data pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#what-if-i-make-a-mistake">What if I make a mistake?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#where-is-my-data-pipeline-stored">Where is my data pipeline stored?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/inserting-data.html">Populating the table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#inserting-one-entry-at-a-time">Inserting one entry at a time</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/inserting-data.html#inserting-a-tuple-list">Inserting a tuple/list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/inserting-data.html#inserting-a-structure">Inserting a structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#inserting-multiple-entries-at-a-time">Inserting multiple entries at a time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#data-integrity">Data integrity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/querying-data.html">Querying and fetching data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#fetching-all-the-data">Fetching all the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#fetching-specific-attributes">Fetching specific attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#querying-data">Querying Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#restricting-by-attribute-value">Restricting by attribute value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#using-inequality-in-restriction">Using inequality in restriction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#combining-restrictions">Combining restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#restricting-by-a-structure">Restricting by a structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#fetching-query-results">Fetching query results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#deleting-entries">Deleting entries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/child-table.html">Defining dependent tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#defining-tutorial-session-table">Defining <code class="docutils literal notranslate"><span class="pre">tutorial.Session</span></code> table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/child-table.html#for-dependency-specification"><code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> for dependency specification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#dependency-in-action">Dependency in action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#integrity-with-table-dependencies">Integrity with table dependencies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/child-table.html#deleting-dependent-entries">Deleting dependent entries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/more-queries.html">Queries with multiple tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#restriction-by-other-table">Restriction by other table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/more-queries.html#combining-restrictions">Combining restrictions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#difference-operator">Difference Operator <code class="docutils literal notranslate"><span class="pre">-</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#join-operator">Join operator <code class="docutils literal notranslate"><span class="pre">*</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/importing-data.html">Importing data into a table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#setting-up-tables">Setting up tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#getting-the-data">Getting the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/importing-data.html#macos">MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/importing-data.html#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/importing-data.html#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#data-files">Data files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#imported-table">Imported table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#populate-method"><code class="docutils literal notranslate"><span class="pre">populate</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#implementing-maketuples">Implementing <code class="docutils literal notranslate"><span class="pre">makeTuples</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#populating-neuron-table">Populating <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#multiple-calls-to-populate">Multiple calls to populate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/computed-table.html">Computation in data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/computed-table.html#performing-computation-on-data">Performing computation on data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#defining-computed-tables">Defining computed tables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/computed-table.html#detecting-spikes-from-neural-activity">Detecting spikes from neural activity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#defining-lookup-tables">Defining Lookup tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#defining-spikes-table">Defining <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#populating-spikes">Populating <code class="docutils literal notranslate"><span class="pre">Spikes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#seeing-them-all-together">Seeing them all together</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/computed-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataJoint Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Building your first data pipeline</a> &raquo;</li>
+      <li>Computation in data pipeline</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/beginner/building-first-pipeline/python/computed-table.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="computation-in-data-pipeline">
+<h1>Computation in data pipeline<a class="headerlink" href="#computation-in-data-pipeline" title="Permalink to this headline"></a></h1>
+<p>Welcome to the last (but certainly not the least!) section of the tutorial! Now that we
+have the recorded neural activties imported into a table (<code class="docutils literal notranslate"><span class="pre">Neuron</span></code>), we are ready to
+perform computations on this data, and store the computation results in to, you guessed
+it, a table! In doing so, we are going to meet two remaining major table tiers:
+lookup table (<code class="docutils literal notranslate"><span class="pre">dj.Lookup</span></code>) and computed table (<code class="docutils literal notranslate"><span class="pre">dj.Computed</span></code>).</p>
+<section id="computing-statistics-on-neural-activities">
+<h2>Computing statistics on neural activities<a class="headerlink" href="#computing-statistics-on-neural-activities" title="Permalink to this headline"></a></h2>
+<p>Now we have the “raw” electric activities from neurons, let’s say that we would like to
+detect spikes automatically. Before we tackle this challenge, let’s first get a better idea about our data by computing a few statistics on the data such as mean and standard deviation
+of the electric activity.</p>
+<section id="computed-tables">
+<h3>Computed tables<a class="headerlink" href="#computed-tables" title="Permalink to this headline"></a></h3>
+<p>A crticial feature of a data pipeline is that not only the raw data (i.e. entered manually
+or imported from external source) but also the processed data and computation results
+reside in the same data pipeline.
+A <strong>computed table</strong> is created by subclassing <code class="docutils literal notranslate"><span class="pre">dj.Computed</span></code> and
+1) defines a computation to be performed on data found in other table(s), and
+2) stores the results of this computation.</p>
+<p>Just like the imported tables (<code class="docutils literal notranslate"><span class="pre">dj.Imported</span></code>), computed tables (<code class="docutils literal notranslate"><span class="pre">dj.Computed</span></code>) provide the
+<code class="docutils literal notranslate"><span class="pre">populate</span></code> method and <code class="docutils literal notranslate"><span class="pre">make</span></code> method, and therefore provides us with a mechanism to
+perform computation on every combination of parent/depended tables!</p>
+</section>
+<section id="computing-neuron-activity-statistics">
+<h3>Computing neuron activity statistics<a class="headerlink" href="#computing-neuron-activity-statistics" title="Permalink to this headline"></a></h3>
+<p>Let’s now define our first computed table that <strong>computes</strong> the statistics
+of electric activity <strong>for each neuron in ``Neuron``</strong> and call it``ActivityStatistics``.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@schema</span>
+<span class="k">class</span> <span class="nc">ActivityStatistics</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">Computed</span><span class="p">):</span>
+    <span class="n">definition</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    -&gt; Neuron</span>
+<span class="s2">    ---</span>
+<span class="s2">    mean: float    # mean activity</span>
+<span class="s2">    stdev: float   # standard deviation of activity</span>
+<span class="s2">    max: float     # maximum activity</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">activity</span> <span class="o">=</span> <span class="p">(</span><span class="n">Neuron</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;activity&#39;</span><span class="p">)</span>    <span class="c1"># fetch activity as NumPy array</span>
+
+        <span class="c1"># compute various statistics on activity</span>
+        <span class="n">key</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>   <span class="c1"># compute mean</span>
+        <span class="n">key</span><span class="p">[</span><span class="s1">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>   <span class="c1"># compute standard deviation</span>
+        <span class="n">key</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>     <span class="c1"># compute max</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Computed statistics for mouse_id </span><span class="si">{mouse_id}</span><span class="s1"> session_date </span><span class="si">{session_date}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>As usual, let’s take a look at it step by step!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@schema</span>
+<span class="k">class</span> <span class="nc">ActivityStatistics</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">Computed</span><span class="p">):</span>
+<span class="hll">    <span class="n">definition</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+</span><span class="hll"><span class="s2">    -&gt; Neuron</span>
+</span><span class="hll"><span class="s2">    ---</span>
+</span><span class="hll"><span class="s2">    mean: float    # mean activity</span>
+</span><span class="hll"><span class="s2">    stdev: float   # standard deviation of activity</span>
+</span><span class="hll"><span class="s2">    max: float     # maximum activity</span>
+</span><span class="hll"><span class="s2">    &quot;&quot;&quot;</span>
+</span>
+    <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">activity</span> <span class="o">=</span> <span class="p">(</span><span class="n">Neuron</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;activity&#39;</span><span class="p">)</span>    <span class="c1"># fetch activity as NumPy array</span>
+
+        <span class="c1"># compute various statistics on activity</span>
+        <span class="n">key</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>   <span class="c1"># compute mean</span>
+        <span class="n">key</span><span class="p">[</span><span class="s1">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>   <span class="c1"># compute standard deviation</span>
+        <span class="n">key</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>     <span class="c1"># compute max</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Computed statistics for mouse_id </span><span class="si">{mouse_id}</span><span class="s1"> session_date </span><span class="si">{session_date}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Here each <code class="docutils literal notranslate"><span class="pre">ActivityStatistics</span></code> entry <strong>depends</strong> on a <code class="docutils literal notranslate"><span class="pre">Neuron</span></code>. Because the <code class="docutils literal notranslate"><span class="pre">ActivityStatistics</span></code>
+table does not define any additional primary key attribute (i.e. no other attribute entries above
+<code class="docutils literal notranslate"><span class="pre">---</span></code> separator), each row in the <code class="docutils literal notranslate"><span class="pre">ActivityStatistics</span></code> table is uniquely identified by a
+single neuron in the <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table. Each entry in the <code class="docutils literal notranslate"><span class="pre">ActivityStatistics</span></code> table will have
+non-primary key attributes <code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">stdev</span></code> and <code class="docutils literal notranslate"><span class="pre">max</span></code> to hold the mean, standard deviation
+and maximum value of the electric activity, respectively.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@schema</span>
+<span class="k">class</span> <span class="nc">ActivityStatistics</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">Computed</span><span class="p">):</span>
+    <span class="n">definition</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    -&gt; Neuron</span>
+<span class="s2">    ---</span>
+<span class="s2">    mean: float    # mean activity</span>
+<span class="s2">    stdev: float   # standard deviation of activity</span>
+<span class="s2">    max: float     # maximum activity</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="hll">    <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span class="hll">        <span class="n">activity</span> <span class="o">=</span> <span class="p">(</span><span class="n">Neuron</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;activity&#39;</span><span class="p">)</span>    <span class="c1"># fetch activity as NumPy array</span>
+</span><span class="hll">
+</span><span class="hll">        <span class="c1"># compute various statistics on activity</span>
+</span><span class="hll">        <span class="n">key</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>   <span class="c1"># compute mean</span>
+</span><span class="hll">        <span class="n">key</span><span class="p">[</span><span class="s1">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>   <span class="c1"># compute standard deviation</span>
+</span><span class="hll">        <span class="n">key</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>     <span class="c1"># compute max</span>
+</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span><span class="hll">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Computed statistics for mouse_id </span><span class="si">{mouse_id}</span><span class="s1"> session_date </span><span class="si">{session_date}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">))</span>
+</span></pre></div>
+</div>
+<p>As mentioned earlier, computed tables are equipped with <code class="docutils literal notranslate"><span class="pre">populate</span></code> method which would call
+the <code class="docutils literal notranslate"><span class="pre">make</span></code> for every combination of dependent/parent tables. In this case,
+<code class="docutils literal notranslate"><span class="pre">ActivityStatistics</span></code>’s <code class="docutils literal notranslate"><span class="pre">make</span></code> will be called for every neuron in the
+<code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table.</p>
+<p>Here, for each neuron in the <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table (pointed to by <code class="docutils literal notranslate"><span class="pre">key</span></code>), we  1) get the value of column
+<code class="docutils literal notranslate"><span class="pre">activity</span></code> storing the neuron’s electric activity as NumPy array, 2) compute various statistics and
+store the values into the <code class="docutils literal notranslate"><span class="pre">key</span></code> dictionary and 3) insert the dictionary into self (<code class="docutils literal notranslate"><span class="pre">ActivityStatistics</span></code>).
+We also print out a message for every completed call to <code class="docutils literal notranslate"><span class="pre">make</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">fetch</span></code> method will always return a list of values even if there is only one element. When you know
+that there is only going to be one entry, you can get the attribute value directly by using
+<code class="docutils literal notranslate"><span class="pre">fetch1</span></code> instead, as was done here.</p>
+</div>
+</section>
+<section id="populating-neuron-statistics">
+<span id="python-neuron-stats"></span><h3>Populating neuron statistics<a class="headerlink" href="#populating-neuron-statistics" title="Permalink to this headline"></a></h3>
+<p>With this computation defined, we can trigger activity statistics to be computed for all entries in
+<code class="docutils literal notranslate"><span class="pre">Neuron</span></code> by simply instantiating and calling <code class="docutils literal notranslate"><span class="pre">populate</span></code> method on <code class="docutils literal notranslate"><span class="pre">ActivityStatistics</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span> <span class="o">=</span> <span class="n">ActivityStatistics</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span>
+<span class="go">*mouse_id    *session_date  mean     stdev     max</span>
+<span class="go">+----------+ +------------+ +------+ +-------+ +-----+</span>
+
+<span class="go"> (0 tuples)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>  <span class="c1"># trigger population</span>
+<span class="go">Computed statistics for mouse_id 0 session_date 2017-05-15</span>
+<span class="go">Computed statistics for mouse_id 0 session_date 2017-05-19</span>
+<span class="go">Computed statistics for mouse_id 5 session_date 2017-01-05</span>
+<span class="go">Computed statistics for mouse_id 100 session_date 2017-05-25</span>
+<span class="go">Computed statistics for mouse_id 100 session_date 2017-06-01</span>
+</pre></div>
+</div>
+<p>Now let’s take a look at the content of the <code class="docutils literal notranslate"><span class="pre">ActivityStatistics</span></code> table:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span>
+<span class="go">*mouse_id    *session_date  mean          stdev        max</span>
+<span class="go">+----------+ +------------+ +-----------+ +----------+ +---------+</span>
+<span class="go">0            2017-05-15     0.207357      0.400867     2.48161</span>
+<span class="go">0            2017-05-19     0.13274       0.291462     1.82805</span>
+<span class="go">5            2017-01-05     0.0891786     0.236412     1.37389</span>
+<span class="go">100          2017-05-25     0.21907       0.328783     1.76383</span>
+<span class="go">100          2017-06-01     0.0873266     0.237858     1.32454</span>
+<span class="go"> (5 tuples)</span>
+</pre></div>
+</div>
+<p>Great! We have successfully computed various neuronal activity statistics for all neurons
+in the <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table with a single method call to <code class="docutils literal notranslate"><span class="pre">populate</span></code>.
+Computation couldn’t really be easier than that!</p>
+</section>
+</section>
+<section id="detecting-spikes-from-neural-activity">
+<h2>Detecting spikes from neural activity<a class="headerlink" href="#detecting-spikes-from-neural-activity" title="Permalink to this headline"></a></h2>
+<p>Now we have a better idea of our neuronal activity data, let’s try tacking the more challenging
+computation - the spike detection. As you may know, spike detection is a very challenging
+(and exciting) subject and is a very active area of research!
+However, rather than attempting to implement the state-of-the-art spike detection algorithm,
+we are going to implement a very simple algorithm where we register a “spike”
+every time the activity <strong>rises above</strong> a certain <strong>threshold</strong> value.</p>
+<p>Importantly, this means that the result of our computation (i.e. detected spikes) will depend
+a lot on the chosen value of the <strong>threshold</strong>, and we would like to be able to try a few
+different value of threshold to see what works well. In other words, we would like to be able
+to run the spike detection algorithm with a few different values of the <strong>threshold</strong> and
+compare the results side-by-side.</p>
+<p>Thankfully, this can be achieved rather straightforwardly by preparing a <strong>lookup table</strong>
+to store different values of computation paramters (i.e. threshold values), and compute spikes for <strong>every combination of neurons and parameter value set</strong>.</p>
+<section id="defining-lookup-tables">
+<h3>Defining Lookup tables<a class="headerlink" href="#defining-lookup-tables" title="Permalink to this headline"></a></h3>
+<p>Let’s go ahead and define a lookup table called <code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code> to contain the
+parameters for spike detection, namely the threshold value.
+As you might have guessed, you define a lookup table by subclassing <code class="docutils literal notranslate"><span class="pre">dj.Lookup</span></code>.
+Lookup table is almost identical to a manual table
+(<code class="docutils literal notranslate"><span class="pre">dj.Manual</span></code>) but signifies that this table contains values like parameters for computation,
+rather than raw data.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@schema</span>
+<span class="k">class</span> <span class="nc">SpikeDetectionParam</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">Lookup</span><span class="p">):</span>
+    <span class="n">definition</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    sdp_id: int      # unique id for spike detection parameter set</span>
+<span class="s2">    ---</span>
+<span class="s2">    threshold: float   # threshold for spike detection</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Notice that we used a field <code class="docutils literal notranslate"><span class="pre">sdp_id</span></code> to serve as the primary key for the <code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code>
+rathern than using <code class="docutils literal notranslate"><span class="pre">threshold</span></code> is the primary key, despite the fact that <code class="docutils literal notranslate"><span class="pre">threshold</span></code> is the
+only attribute of interset in this table. This is because <code class="docutils literal notranslate"><span class="pre">threshold</span></code> is of data type float
+and exact comparison is difficult for float values. In general, it is recommended that you avoid
+using float data type attribute in your primary key.</p>
+</div>
+</section>
+<section id="defining-spikedetection-table">
+<h3>Defining <code class="docutils literal notranslate"><span class="pre">SpikeDetection</span></code> table<a class="headerlink" href="#defining-spikedetection-table" title="Permalink to this headline"></a></h3>
+<p>Now that we have defined <code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code>, let’s go ahead and define the computed table for
+spike detection and call it <code class="docutils literal notranslate"><span class="pre">Spikes</span></code>!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It’s usually a good diea to call a computed table
+based on what would be the results of the computation rather than naming it based on the
+computation process (i.e. so <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> rather than <code class="docutils literal notranslate"><span class="pre">SpikeDetection</span></code>).
+This would make sense if you consider the fact that the table will be housing the
+results of the computation, here the detected neuronal <strong>spikes</strong>.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@schema</span>
+<span class="k">class</span> <span class="nc">Spikes</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">Computed</span><span class="p">):</span>
+    <span class="n">definition</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    -&gt; Neuron</span>
+<span class="s2">    -&gt; SpikeDetectionParam</span>
+<span class="s2">    ---</span>
+<span class="s2">    spikes: longblob     # detected spikes</span>
+<span class="s2">    count: int           # total number of detected spikes</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Populating for: &#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+        <span class="n">activity</span> <span class="o">=</span> <span class="p">(</span><span class="n">Neuron</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;activity&#39;</span><span class="p">)</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="p">(</span><span class="n">SpikeDetectionParam</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;threshold&#39;</span><span class="p">)</span>
+
+        <span class="n">above_thrs</span> <span class="o">=</span> <span class="p">(</span><span class="n">activity</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>   <span class="c1"># find activity above threshold</span>
+        <span class="n">rising</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">above_thrs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>   <span class="c1"># find rising edge of crossing threshold</span>
+        <span class="n">spikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">rising</span><span class="p">))</span>    <span class="c1"># prepend 0 to account for shortening due to np.diff</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>   <span class="c1"># compute total spike counts</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Detected </span><span class="si">{}</span><span class="s1"> spikes!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+
+        <span class="c1"># save results and insert</span>
+        <span class="n">key</span><span class="p">[</span><span class="s1">&#39;spikes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spikes</span>
+        <span class="n">key</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alright, let’s go through this code step-by-step, first focusing on the definition!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@schema</span>
+<span class="k">class</span> <span class="nc">Spikes</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">Computed</span><span class="p">):</span>
+    <span class="n">definition</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="hll"><span class="s2">    -&gt; Neuron</span>
+</span><span class="hll"><span class="s2">    -&gt; SpikeDetectionParam</span>
+</span><span class="s2">    ---</span>
+<span class="s2">    spikes: longblob     # detected spikes</span>
+<span class="s2">    count: int           # total number of detected spikes</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Notice that the <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> table <strong>depends on both ``Neuron`` and ``SpikeDetectionParam``</strong>!
+What does this mean? This means that each entry (detected spikes) in the <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> table
+is uniquely identified not only by the identify of a neuron (from <code class="docutils literal notranslate"><span class="pre">Neuron</span></code>) but by the
+combination of the neuron identity and <strong>the particular spike detection parameter</strong>
+(from <code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code>). As you will see, this allows for this table to house
+results of spike detection under more than one values for the parameter (i.e. threshold)!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@schema</span>
+<span class="k">class</span> <span class="nc">Spikes</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">Computed</span><span class="p">):</span>
+    <span class="n">definition</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    -&gt; Neuron</span>
+<span class="s2">    -&gt; SpikeDetectionParam</span>
+<span class="s2">    ---</span>
+<span class="hll"><span class="s2">    spikes: longblob     # detected spikes</span>
+</span><span class="hll"><span class="s2">    count: int           # total number of detected spikes</span>
+</span><span class="s2">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>As the non-primary-key attributes, <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> will contain both the detected <code class="docutils literal notranslate"><span class="pre">spikes</span></code>
+as an array of 0’s and 1’s with 1’s at the position of a spike, and the total <code class="docutils literal notranslate"><span class="pre">count</span></code>
+of detected spikes.</p>
+<p>Now let’s move onto the mean of the computed table - <code class="docutils literal notranslate"><span class="pre">make</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Populating for: &#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+<span class="hll">    <span class="n">activity</span> <span class="o">=</span> <span class="p">(</span><span class="n">Neuron</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;activity&#39;</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">threshold</span> <span class="o">=</span> <span class="p">(</span><span class="n">SpikeDetectionParam</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;threshold&#39;</span><span class="p">)</span>
+</span>
+    <span class="n">above_thrs</span> <span class="o">=</span> <span class="p">(</span><span class="n">activity</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>   <span class="c1"># find activity above threshold</span>
+    <span class="n">rising</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">above_thrs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>   <span class="c1"># find rising edge of crossing threshold</span>
+    <span class="n">spikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">rising</span><span class="p">))</span>    <span class="c1"># prepend 0 to account for shortening due to np.diff</span>
+
+    <span class="n">count</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>   <span class="c1"># compute total spike counts</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Detected </span><span class="si">{}</span><span class="s1"> spikes!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+
+    <span class="c1"># save results and insert</span>
+    <span class="n">key</span><span class="p">[</span><span class="s1">&#39;spikes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spikes</span>
+    <span class="n">key</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>One of the first thing we do in <code class="docutils literal notranslate"><span class="pre">make</span></code> is to fetch relevant data from other tables.
+This is a very standard practice when defining <code class="docutils literal notranslate"><span class="pre">make</span></code> in computed tables, as was
+also performed in the <code class="docutils literal notranslate"><span class="pre">ActivityStatistics</span></code> table. Here we fetch the neuron’s electric
+<code class="docutils literal notranslate"><span class="pre">activity</span></code> NumPy array from the <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table, and the value of the <code class="docutils literal notranslate"><span class="pre">threshold</span></code> from
+the <code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code> table.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Populating for: &#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+    <span class="n">activity</span> <span class="o">=</span> <span class="p">(</span><span class="n">Neuron</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;activity&#39;</span><span class="p">)</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="p">(</span><span class="n">SpikeDetectionParam</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;threshold&#39;</span><span class="p">)</span>
+
+<span class="hll">    <span class="n">above_thrs</span> <span class="o">=</span> <span class="p">(</span><span class="n">activity</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>   <span class="c1"># find activity above threshold</span>
+</span><span class="hll">    <span class="n">rising</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">above_thrs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>   <span class="c1"># find rising edge of crossing threshold</span>
+</span><span class="hll">    <span class="n">spikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">rising</span><span class="p">))</span>    <span class="c1"># prepend 0 to account for shortening due to np.diff</span>
+</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>   <span class="c1"># compute total spike counts</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Detected </span><span class="si">{}</span><span class="s1"> spikes!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+
+    <span class="c1"># save results and insert</span>
+    <span class="n">key</span><span class="p">[</span><span class="s1">&#39;spikes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spikes</span>
+    <span class="n">key</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">activity</span></code> and <code class="docutils literal notranslate"><span class="pre">threshold</span></code>, we first find and label where <code class="docutils literal notranslate"><span class="pre">activity</span></code> value is
+above the threshold. This returns an array of 0’s and 1’s where 1’s corresponds to time bins
+where neuron’s activity was above the threshold, storing this as <code class="docutils literal notranslate"><span class="pre">above_thrs</span></code>.</p>
+<p>We then find out all the timebins at which the activity goes from 0 to 1, signifying times
+at which the neuron’s activity <strong>raised above the threshold</strong>, storing this into <code class="docutils literal notranslate"><span class="pre">rising</span></code>!
+Numpy’s <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.diff.html">diff()</a> helps by
+taking the difference between each value and subsequent value.
+We then adjust this array so that it has the same length as the original <code class="docutils literal notranslate"><span class="pre">activity</span></code>,
+and store the result as our detected <code class="docutils literal notranslate"><span class="pre">spikes</span></code>, by prepending a 0 with
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.hstack.html">hstack()</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Populating for: &#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+    <span class="n">activity</span> <span class="o">=</span> <span class="p">(</span><span class="n">Neuron</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;activity&#39;</span><span class="p">(</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="p">(</span><span class="n">SpikeDetectionParam</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;threshold&#39;</span><span class="p">)</span>
+
+    <span class="n">above_thrs</span> <span class="o">=</span> <span class="p">(</span><span class="n">activity</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>   <span class="c1"># find activity above threshold</span>
+    <span class="n">rising</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">above_thrs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>   <span class="c1"># find rising edge of crossing threshold</span>
+    <span class="n">spikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">rising</span><span class="p">))</span>    <span class="c1"># prepend 0 to account for shortening due to np.diff</span>
+
+    <span class="n">count</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>   <span class="c1"># compute total spike counts</span>
+<span class="hll">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Detected </span><span class="si">{}</span><span class="s1"> spikes!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+</span>
+    <span class="c1"># save results and insert</span>
+    <span class="n">key</span><span class="p">[</span><span class="s1">&#39;spikes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spikes</span>
+    <span class="n">key</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We then compute the total detected spikes and print it out to the screen.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Populating for: &#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+    <span class="n">activity</span> <span class="o">=</span> <span class="p">(</span><span class="n">Neuron</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;activity&#39;</span><span class="p">)</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="p">(</span><span class="n">SpikeDetectionParam</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">fetch1</span><span class="p">(</span><span class="s1">&#39;threshold&#39;</span><span class="p">)</span>
+
+    <span class="n">above_thrs</span> <span class="o">=</span> <span class="p">(</span><span class="n">activity</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>   <span class="c1"># find activity above threshold</span>
+    <span class="n">rising</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">above_thrs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>   <span class="c1"># find rising edge of crossing threshold</span>
+    <span class="n">spikes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">rising</span><span class="p">))</span>    <span class="c1"># prepend 0 to account for shortening due to np.diff</span>
+
+    <span class="n">count</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>   <span class="c1"># compute total spike counts</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Detected </span><span class="si">{}</span><span class="s1"> spikes!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+
+    <span class="c1"># save results and insert</span>
+<span class="hll">    <span class="n">key</span><span class="p">[</span><span class="s1">&#39;spikes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spikes</span>
+</span><span class="hll">    <span class="n">key</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+</span><span class="hll">    <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>Finally, we store the computed <code class="docutils literal notranslate"><span class="pre">spikes</span></code> and <code class="docutils literal notranslate"><span class="pre">count</span></code> by inserting into this (<code class="docutils literal notranslate"><span class="pre">Spieks</span></code>)
+table!!</p>
+</section>
+<section id="populating-spikes">
+<h3>Populating <code class="docutils literal notranslate"><span class="pre">Spikes</span></code><a class="headerlink" href="#populating-spikes" title="Permalink to this headline"></a></h3>
+<p>Alright after our hard work putting implemeting the spike detection algorithm, it’s time for
+us to run it! Let’s instantiate the <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> table and <code class="docutils literal notranslate"><span class="pre">populate</span></code> it away!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spikes</span> <span class="o">=</span> <span class="n">Spikes</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spikes</span>     <span class="c1"># preview the table</span>
+<span class="go">*mouse_id    *session_date  *sdp_id    count     spikes</span>
+<span class="go">+----------+ +------------+ +--------+ +-------+ +--------+</span>
+
+<span class="go"> (0 tuples)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spikes</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>    <span class="c1"># populate it away!</span>
+</pre></div>
+</div>
+<p>Sadly nothing seems to be happening. Why could this be the case? The answer lies in the
+<code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code> table:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">SpikeDetectionParam</span><span class="p">()</span>    <span class="c1"># instantiate and view the content</span>
+<span class="go">*sdp_id    threshold</span>
+<span class="go">+--------+ +-----------+</span>
+
+<span class="go"> (0 tuples)</span>
+</pre></div>
+</div>
+<p>Aha! Because <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> table performs computation on the every <strong>combination</strong> of <code class="docutils literal notranslate"><span class="pre">Neuron</span></code>
+and <code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code>, when there is no entry in <code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code>, there was
+nothing to be populated!</p>
+<section id="filling-in-lookup-table">
+<h4>Filling in <code class="docutils literal notranslate"><span class="pre">Lookup</span></code> table<a class="headerlink" href="#filling-in-lookup-table" title="Permalink to this headline"></a></h4>
+<p>Let’s fix this but creating an entry in <code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code>. Consulting the statistics
+computed for neurons in <a class="reference internal" href="#python-neuron-stats"><span class="std std-ref">Populating neuron statistics</span></a>, let’s pick a value that is at least 1-2
+standard deviation above the mean value. Let’s try 0.9 as our threshold! You would fill
+in values into a <code class="docutils literal notranslate"><span class="pre">Lookup</span></code> table just how you would for a <code class="docutils literal notranslate"><span class="pre">Manual</span></code> table:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sdp</span> <span class="o">=</span> <span class="n">SpikeDetectionParam</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sdp</span><span class="o">.</span><span class="n">insert1</span><span class="p">({</span><span class="s1">&#39;sdp_id&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;threshold&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Here we have assigned the <code class="docutils literal notranslate"><span class="pre">threshold</span></code> of 0.9 the <code class="docutils literal notranslate"><span class="pre">sdp_id</span></code> of 0.</p>
+</section>
+<section id="running-spike-detection-with-multiple-parameter-values">
+<h4>Running spike detection with multiple parameter values<a class="headerlink" href="#running-spike-detection-with-multiple-parameter-values" title="Permalink to this headline"></a></h4>
+<p>Alright, now with <code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code> populated with a parameter, let’s try to <code class="docutils literal notranslate"><span class="pre">populate</span></code>
+the <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> table once again:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spikes</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 0, &#39;session_date&#39;: datetime.date(2017, 5, 15), &#39;sdp_id&#39;: 0}</span>
+<span class="go">Detected 27 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 0, &#39;session_date&#39;: datetime.date(2017, 5, 19), &#39;sdp_id&#39;: 0}</span>
+<span class="go">Detected 21 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 5, &#39;session_date&#39;: datetime.date(2017, 1, 5), &#39;sdp_id&#39;: 0}</span>
+<span class="go">Detected 14 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 100, &#39;session_date&#39;: datetime.date(2017, 5, 25), &#39;sdp_id&#39;: 0}</span>
+<span class="go">Detected 35 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 100, &#39;session_date&#39;: datetime.date(2017, 6, 1), &#39;sdp_id&#39;: 0}</span>
+<span class="go">Detected 15 spikes!</span>
+</pre></div>
+</div>
+<p>Woohoo! This time the algorithm ran, reporting us how the detected spike counts!!</p>
+<p>Let’s now try running this same algorithm but under different parameter configuration - that is
+different values of <code class="docutils literal notranslate"><span class="pre">threshold</span></code>! Let’s try a much smaller <code class="docutils literal notranslate"><span class="pre">threshold</span></code> value of say 0.1!
+Go ahead and inser this new parameter value into the <code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code> table:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sdp</span><span class="o">.</span><span class="n">insert1</span><span class="p">({</span><span class="s1">&#39;sdp_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;threshold&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>…and re-trigger the <code class="docutils literal notranslate"><span class="pre">populate</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spikes</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 0, &#39;session_date&#39;: datetime.date(2017, 5, 15), &#39;sdp_id&#39;: 1}</span>
+<span class="go">Detected 128 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 0, &#39;session_date&#39;: datetime.date(2017, 5, 19), &#39;sdp_id&#39;: 1}</span>
+<span class="go">Detected 135 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 5, &#39;session_date&#39;: datetime.date(2017, 1, 5), &#39;sdp_id&#39;: 1}</span>
+<span class="go">Detected 132 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 100, &#39;session_date&#39;: datetime.date(2017, 5, 25), &#39;sdp_id&#39;: 1}</span>
+<span class="go">Detected 142 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 100, &#39;session_date&#39;: datetime.date(2017, 6, 1), &#39;sdp_id&#39;: 1}</span>
+<span class="go">Detected 151 spikes!</span>
+</pre></div>
+</div>
+<p>Wow, that gave rise to a lot more spikes, most likely because the algorithm is now picking up
+some noise us spikes!</p>
+<p>For fun, let’s try slightly bigger value - maybe 1.3?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sdp</span><span class="o">.</span><span class="n">insert1</span><span class="p">({</span><span class="s1">&#39;sdp_id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;threshold&#39;</span><span class="p">:</span> <span class="mf">1.3</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spikes</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 0, &#39;session_date&#39;: datetime.date(2017, 5, 15), &#39;sdp_id&#39;: 2}</span>
+<span class="go">Detected 13 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 0, &#39;session_date&#39;: datetime.date(2017, 5, 19), &#39;sdp_id&#39;: 2}</span>
+<span class="go">Detected 5 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 5, &#39;session_date&#39;: datetime.date(2017, 1, 5), &#39;sdp_id&#39;: 2}</span>
+<span class="go">Detected 1 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 100, &#39;session_date&#39;: datetime.date(2017, 5, 25), &#39;sdp_id&#39;: 2}</span>
+<span class="go">Detected 9 spikes!</span>
+
+<span class="go">Populating for:  {&#39;mouse_id&#39;: 100, &#39;session_date&#39;: datetime.date(2017, 6, 1), &#39;sdp_id&#39;: 2}</span>
+<span class="go">Detected 2 spikes!</span>
+</pre></div>
+</div>
+<p>and that appears to have been a bit too big for threshold, causing us to lose spikes!</p>
+</section>
+</section>
+<section id="seeing-them-all-together">
+<h3>Seeing them all together<a class="headerlink" href="#seeing-them-all-together" title="Permalink to this headline"></a></h3>
+<p>Finally, we can look at all of our hard earned spikes under different threshold values by
+inspecting the <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> table:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">spikes</span>
+<span class="o">*</span><span class="n">mouse_id</span>    <span class="o">*</span><span class="n">session_date</span>  <span class="o">*</span><span class="n">sdp_id</span>    <span class="n">count</span>     <span class="n">spikes</span>
+<span class="o">+----------+</span> <span class="o">+------------+</span> <span class="o">+--------+</span> <span class="o">+-------+</span> <span class="o">+--------+</span>
+<span class="mi">0</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">15</span>     <span class="mi">0</span>          <span class="mi">27</span>        <span class="o">&lt;</span><span class="n">BLOB</span><span class="o">&gt;</span>
+<span class="mi">0</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">15</span>     <span class="mi">1</span>          <span class="mi">128</span>       <span class="o">&lt;</span><span class="n">BLOB</span><span class="o">&gt;</span>
+<span class="mi">0</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">15</span>     <span class="mi">2</span>          <span class="mi">13</span>        <span class="o">&lt;</span><span class="n">BLOB</span><span class="o">&gt;</span>
+<span class="mi">0</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">19</span>     <span class="mi">0</span>          <span class="mi">21</span>        <span class="o">&lt;</span><span class="n">BLOB</span><span class="o">&gt;</span>
+<span class="mi">0</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">19</span>     <span class="mi">1</span>          <span class="mi">135</span>       <span class="o">&lt;</span><span class="n">BLOB</span><span class="o">&gt;</span>
+<span class="mi">0</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">19</span>     <span class="mi">2</span>          <span class="mi">5</span>         <span class="o">&lt;</span><span class="n">BLOB</span><span class="o">&gt;</span>
+<span class="mi">5</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">05</span>     <span class="mi">0</span>          <span class="mi">14</span>        <span class="o">&lt;</span><span class="n">BLOB</span><span class="o">&gt;</span>
+   <span class="o">...</span>
+ <span class="p">(</span><span class="mi">15</span> <span class="n">tuples</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Even better, we can see the values of <code class="docutils literal notranslate"><span class="pre">SpikeDetectionParam</span></code> together by <a class="reference internal" href="more-queries.html#python-join"><span class="std std-ref">joining</span></a> the two tables together. We can also add the same filtering we previously
+learned, by specifying a date:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">spikes</span> <span class="o">*</span> <span class="n">sdp</span> <span class="o">&amp;</span> <span class="s1">&#39;session_date = &quot;2017-05-15&quot;&#39;</span>
+<span class="o">*</span><span class="n">mouse_id</span>    <span class="o">*</span><span class="n">session_date</span>  <span class="o">*</span><span class="n">sdp_id</span>    <span class="n">count</span>     <span class="n">threshold</span>     <span class="n">spikes</span>
+<span class="o">+----------+</span> <span class="o">+------------+</span> <span class="o">+--------+</span> <span class="o">+-------+</span> <span class="o">+-----------+</span> <span class="o">+--------+</span>
+<span class="mi">0</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">15</span>     <span class="mi">0</span>          <span class="mi">27</span>        <span class="mf">0.9</span>           <span class="o">&lt;</span><span class="n">BLOB</span><span class="o">&gt;</span>
+<span class="mi">0</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">15</span>     <span class="mi">1</span>          <span class="mi">128</span>       <span class="mf">0.1</span>           <span class="o">&lt;</span><span class="n">BLOB</span><span class="o">&gt;</span>
+<span class="mi">0</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">15</span>     <span class="mi">2</span>          <span class="mi">13</span>        <span class="mf">1.3</span>           <span class="o">&lt;</span><span class="n">BLOB</span><span class="o">&gt;</span>
+ <span class="p">(</span><span class="mi">3</span> <span class="n">tuples</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>python
+By default preview of the table will show only the first 7 entries in the table. If you
+want to see more of the table, you can change the <code class="docutils literal notranslate"><span class="pre">display.limit</span></code> in <code class="docutils literal notranslate"><span class="pre">dj.config</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dj</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;display.limit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>     <span class="c1"># display up to 20 entries in preview</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="what-s-next">
+<h2>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline"></a></h2>
+<p>Congratulations!! You have now reached the end of the <strong>Building your first data pipeline</strong>
+tutorial!! You have learned a lot throughout this tutorial, and I hope that you now
+see the strengths of DataJoint in buliding data pipeline! Before moving forward,
+go ahead and spend some more time playing with the simple but effective data pipeline that
+you have built! Try to see if you can improve the algorithm for spike detection or
+even start defining a new computation all togehter!</p>
+<p>Furthermore your journey doesn’t end here! Although we have covered the major topics of DataJoint, there are still a lot of cool features to be explored! Be sure to checkout our
+<a class="reference external" href="http://docs.datajoint.io">documentation</a> and stay tuned for upcoming tutorials covering
+advanced topics in DataJoint!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="importing-data.html" class="btn btn-neutral float-left" title="Importing data into a table" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../matlab/first-table.html" class="btn btn-neutral float-right" title="Defining your first table" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, DataJoint Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

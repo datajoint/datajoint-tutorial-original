@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Importing data into a table &mdash; DataJoint Tutorials  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/datajoint_theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Computation in data pipeline" href="computed-table.html" />
+    <link rel="prev" title="Queries with multiple tables" href="more-queries.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/djTutorialLogoWhite.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/introduction.html">Setting up for DataJoint</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/introduction.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/introduction.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/get-database.html">Getting connected to a database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#connect-to-datajoint-io-recommended">Connect to DataJoint.io (Recommended)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/get-database.html#signing-up-to-datajoint-io-account">Signing up to DataJoint.io account</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#setting-up-a-local-database-server-intermediate">Setting up a local database server (Intermediate)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/local-database.html">Setting Up a Local Database Server</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#setting-up-database-using-docker">Setting up database using Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#why-docker">Why Docker?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#installing-docker">Installing Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#launching-a-database-server">Launching a database server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#setting-up-a-database-server-on-another-machine-advanced">Setting up a database server on another machine (Advanced)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/datajoint-python.html">Installing DataJoint for Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#installing-the-datajoint-package">Installing the DataJoint Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-python.html#upgrading-datajoint">Upgrading DataJoint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#configuring-datajoint">Configuring DataJoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-python.html#changing-password">Changing password</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html">Installing DataJoint for MATLAB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#installing-the-datajoint-toolbox">Installing the DataJoint Toolbox</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#upgrading-datajoint">Upgrading DataJoint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#configuring-datajoint">Configuring DataJoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#changing-password">Changing password</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">First Steps</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Building your first data pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#what-s-covered-in-this-tutorial">What’s covered in this tutorial?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#designing-data-pipelines-for-your-experiments">Designing data pipelines for your experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html#building-in-python">Building in Python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="first-table.html">Defining your first table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#creating-a-schema">Creating a schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#defining-the-mouse-table-class">Defining the Mouse table class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#table-classes">Table classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#table-definition">Table definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#defining-a-table-in-a-schema">Defining a table in a schema</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#creating-the-table-in-the-data-pipeline">Creating the table in the data pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#what-if-i-make-a-mistake">What if I make a mistake?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inserting-data.html">Populating the table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#inserting-one-entry-at-a-time">Inserting one entry at a time</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="inserting-data.html#inserting-a-tuple-list">Inserting a tuple/list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inserting-data.html#inserting-a-dictionary">Inserting a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#inserting-multiple-entries-at-a-time">Inserting multiple entries at a time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#data-integrity">Data integrity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="save-tables.html">Saving your data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="save-tables.html#where-is-my-data-pipeline-stored">Where is my data pipeline stored?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="save-tables.html#saving-your-table-code">Saving your table code</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="save-tables.html#defining-your-table-module">Defining your table module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="save-tables.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="querying-data.html">Querying and fetching data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-all-the-data">Fetching all the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-specific-attributes">Fetching specific attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#querying-data">Querying Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#restricting-by-attribute-value">Restricting by attribute value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#using-inequality-in-restriction">Using inequality in restriction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#combining-restrictions">Combining restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#restricting-by-a-dictionary">Restricting by a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-query-results">Fetching query results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#deleting-entires">Deleting entires</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="child-table.html">Defining dependent table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#defining-session-table">Defining <code class="docutils literal notranslate"><span class="pre">Session</span></code> table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="child-table.html#for-dependency-specification"><code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> for dependency specification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#dependency-in-action">Dependency in action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#integrity-with-table-dependencies">Integrity with table dependencies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="child-table.html#deleting-dependent-entries">Deleting dependent entries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="child-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="more-queries.html">Queries with multiple tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#restriction-by-other-table">Restriction by other table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="more-queries.html#combining-restricitions">Combining restricitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#difference-operator">Difference Operator <code class="docutils literal notranslate"><span class="pre">-</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#join-operator">Join operator <code class="docutils literal notranslate"><span class="pre">*</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Importing data into a table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-tables">Setting up tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-the-data">Getting the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#macos">MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#data-files">Data files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imported-table">Imported table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#populate-method"><code class="docutils literal notranslate"><span class="pre">populate</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementing-make">Implementing <code class="docutils literal notranslate"><span class="pre">make</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#populating-neuron-table">Populating <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-calls-to-populate">Multiple calls to populate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="computed-table.html">Computation in data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="computed-table.html#computing-statistics-on-neural-activities">Computing statistics on neural activities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#computed-tables">Computed tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#computing-neuron-activity-statistics">Computing neuron activity statistics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#populating-neuron-statistics">Populating neuron statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="computed-table.html#detecting-spikes-from-neural-activity">Detecting spikes from neural activity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#defining-lookup-tables">Defining Lookup tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#defining-spikedetection-table">Defining <code class="docutils literal notranslate"><span class="pre">SpikeDetection</span></code> table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#populating-spikes">Populating <code class="docutils literal notranslate"><span class="pre">Spikes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#seeing-them-all-together">Seeing them all together</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="computed-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html#building-in-matlab">Building in MATLAB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/first-table.html">Defining your first table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#creating-a-schema">Creating a schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#defining-the-mouse-table-class">Defining the Mouse table class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/first-table.html#table-classes">Table classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/first-table.html#table-definition">Table definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/first-table.html#defining-a-table-in-a-schema">Defining a table in a schema</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#creating-the-table-in-the-data-pipeline">Creating the table in the data pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#what-if-i-make-a-mistake">What if I make a mistake?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#where-is-my-data-pipeline-stored">Where is my data pipeline stored?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/inserting-data.html">Populating the table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#inserting-one-entry-at-a-time">Inserting one entry at a time</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/inserting-data.html#inserting-a-tuple-list">Inserting a tuple/list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/inserting-data.html#inserting-a-structure">Inserting a structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#inserting-multiple-entries-at-a-time">Inserting multiple entries at a time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#data-integrity">Data integrity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/querying-data.html">Querying and fetching data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#fetching-all-the-data">Fetching all the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#fetching-specific-attributes">Fetching specific attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#querying-data">Querying Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#restricting-by-attribute-value">Restricting by attribute value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#using-inequality-in-restriction">Using inequality in restriction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#combining-restrictions">Combining restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#restricting-by-a-structure">Restricting by a structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#fetching-query-results">Fetching query results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#deleting-entries">Deleting entries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/child-table.html">Defining dependent tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#defining-tutorial-session-table">Defining <code class="docutils literal notranslate"><span class="pre">tutorial.Session</span></code> table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/child-table.html#for-dependency-specification"><code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> for dependency specification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#dependency-in-action">Dependency in action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#integrity-with-table-dependencies">Integrity with table dependencies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/child-table.html#deleting-dependent-entries">Deleting dependent entries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/more-queries.html">Queries with multiple tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#restriction-by-other-table">Restriction by other table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/more-queries.html#combining-restrictions">Combining restrictions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#difference-operator">Difference Operator <code class="docutils literal notranslate"><span class="pre">-</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#join-operator">Join operator <code class="docutils literal notranslate"><span class="pre">*</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/importing-data.html">Importing data into a table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#setting-up-tables">Setting up tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#getting-the-data">Getting the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/importing-data.html#macos">MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/importing-data.html#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/importing-data.html#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#data-files">Data files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#imported-table">Imported table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#populate-method"><code class="docutils literal notranslate"><span class="pre">populate</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#implementing-maketuples">Implementing <code class="docutils literal notranslate"><span class="pre">makeTuples</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#populating-neuron-table">Populating <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#multiple-calls-to-populate">Multiple calls to populate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/computed-table.html">Computation in data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/computed-table.html#performing-computation-on-data">Performing computation on data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#defining-computed-tables">Defining computed tables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/computed-table.html#detecting-spikes-from-neural-activity">Detecting spikes from neural activity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#defining-lookup-tables">Defining Lookup tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#defining-spikes-table">Defining <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#populating-spikes">Populating <code class="docutils literal notranslate"><span class="pre">Spikes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#seeing-them-all-together">Seeing them all together</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/computed-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataJoint Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Building your first data pipeline</a> &raquo;</li>
+      <li>Importing data into a table</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/beginner/building-first-pipeline/python/importing-data.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="importing-data-into-a-table">
+<h1>Importing data into a table<a class="headerlink" href="#importing-data-into-a-table" title="Permalink to this headline"></a></h1>
+<p>Now that we have tables for organizing mouse and experiment sessions, it’s time
+for us to load the data recorded during each experimental session!
+In this section, we will look at creating an <strong>imported table</strong>,
+a table that will automatically import data from files.</p>
+<section id="setting-up-tables">
+<h2>Setting up tables<a class="headerlink" href="#setting-up-tables" title="Permalink to this headline"></a></h2>
+<p>For this section, we will be using mock experimental data to be loaded into the
+table. For this to work properly, the content of the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table must look
+exactly as following for the primary key attributes (<code class="docutils literal notranslate"><span class="pre">mouse_id</span></code> and <code class="docutils literal notranslate"><span class="pre">session_date</span></code>)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="n">mouse_id</span>    <span class="o">*</span><span class="n">session_date</span>  <span class="n">experiment_set</span> <span class="n">experimenter</span>
+<span class="o">+----------+</span> <span class="o">+------------+</span> <span class="o">+------------+</span> <span class="o">+------------+</span>
+<span class="mi">0</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">15</span>     <span class="mi">0</span>              <span class="n">Edgar</span> <span class="n">Walker</span>
+<span class="mi">0</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">19</span>     <span class="mi">0</span>              <span class="n">Edgar</span> <span class="n">Walker</span>
+<span class="mi">5</span>            <span class="mi">2017</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">05</span>     <span class="mi">1</span>              <span class="n">Fabian</span> <span class="n">Sinz</span>
+<span class="mi">100</span>          <span class="mi">2017</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">25</span>     <span class="mi">1</span>              <span class="n">Jake</span> <span class="n">Reimer</span>
+ <span class="p">(</span><span class="mi">4</span> <span class="n">tuples</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If your <code class="docutils literal notranslate"><span class="pre">Session</span></code> table doesn’t quite have the same set of primary keys (<code class="docutils literal notranslate"><span class="pre">mouse_id</span></code>
+and <code class="docutils literal notranslate"><span class="pre">session_date</span></code> combinations) as shown above, make use of the various <code class="docutils literal notranslate"><span class="pre">insert</span></code> methods
+covered in <a class="reference internal" href="inserting-data.html"><span class="doc">Populating the table</span></a> and <code class="docutils literal notranslate"><span class="pre">delete</span></code> method covered in <a class="reference internal" href="querying-data.html#python-delete-entries"><span class="std std-ref">Deleting entires</span></a>
+to adjust your <code class="docutils literal notranslate"><span class="pre">Session</span></code> table content until it matches the table shown above.</p>
+<p>Remember, because of data integrity constraints, if you are missing some of the mice in the <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> table, you may have to insert the
+appropriate mouse into your <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> table before you can insert a session corresponding
+to that mouse into the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table.</p>
+</section>
+<section id="getting-the-data">
+<h2>Getting the data<a class="headerlink" href="#getting-the-data" title="Permalink to this headline"></a></h2>
+<p>You can download the (mock) experimental data for the above sessions packaged into a ZIP file
+here:</p>
+<p><code class="xref download docutils literal notranslate"><span class="pre">Experiment</span> <span class="pre">data</span></code></p>
+<p>Go ahead and download the ZIP file and unzip the content. Place the <code class="docutils literal notranslate"><span class="pre">data</span></code> directory from the
+ZIP file somewhere where you’d remember. You will need the full path to this <code class="docutils literal notranslate"><span class="pre">data</span></code> directory
+to follow the rest of this section. In what follows, we will be refering to the path to the data
+simply as <code class="docutils literal notranslate"><span class="pre">/path/to/data/</span></code> so be sure to substitute the full path to the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder when trying
+out the commands below.</p>
+<p>The follow are a few examples demonstrating what your data path might look like:</p>
+<section id="macos">
+<h3>MacOS<a class="headerlink" href="#macos" title="Permalink to this headline"></a></h3>
+<p>If you extract the <code class="docutils literal notranslate"><span class="pre">data</span></code> folder into your <code class="docutils literal notranslate"><span class="pre">Desktop</span></code>, for example, then the path to the
+<code class="docutils literal notranslate"><span class="pre">data</span></code> folder will be something like <code class="docutils literal notranslate"><span class="pre">/home/username/Desktop/data</span></code> where you replace <code class="docutils literal notranslate"><span class="pre">username</span></code>
+with your user name for your machine.</p>
+</section>
+<section id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline"></a></h3>
+<p>On Windows, if you extracted <code class="docutils literal notranslate"><span class="pre">data</span></code> folder onto your <code class="docutils literal notranslate"><span class="pre">Desktop</span></code>, then the full path to the <code class="docutils literal notranslate"><span class="pre">data</span></code>
+folder will look like <code class="docutils literal notranslate"><span class="pre">C:\Users\username\Desktop\data</span></code> where you replace <code class="docutils literal notranslate"><span class="pre">username</span></code> with
+your user name for your machine.</p>
+</section>
+<section id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline"></a></h3>
+<p>If you extracted the <code class="docutils literal notranslate"><span class="pre">data</span></code> directory to your home folder, then the full path to the <code class="docutils literal notranslate"><span class="pre">data</span></code>
+directory will be something like <code class="docutils literal notranslate"><span class="pre">/home/username/data</span></code> where you replace <code class="docutils literal notranslate"><span class="pre">username</span></code>
+with your user name on the machine.</p>
+</section>
+</section>
+<section id="data-files">
+<h2>Data files<a class="headerlink" href="#data-files" title="Permalink to this headline"></a></h2>
+<p>Inside the <code class="docutils literal notranslate"><span class="pre">data</span></code> directory, you will find 4 <code class="docutils literal notranslate"><span class="pre">.npy</span></code> (saved NumPy array) files with names like
+<code class="docutils literal notranslate"><span class="pre">data_100_2017-05-25.npy</span></code>. As you might have guessed, these are the data for the 4 recording
+sessions in the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table, and each file are named according to the <code class="docutils literal notranslate"><span class="pre">mouse_id</span></code> and
+<code class="docutils literal notranslate"><span class="pre">session_date</span></code> - the attributes of the primary keys - in the format <code class="docutils literal notranslate"><span class="pre">data_{mouse_id}_{session_date}.npy</span></code>.</p>
+<p>Let’s take a quick peak at the data content:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>     <span class="c1"># import the numpy library</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;/path/to/data/data_100_2017-05-25.npy&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(1000,)</span>
+</pre></div>
+</div>
+<p>So this particular file contains a NumPy array of length 1000. This represents a recording of
+raw electric activity from a single neuron over 1000 time bins.</p>
+<p>Other files contain similar looking data in NumPy array format, giving the electric activity
+from a neuron recorded from each session.</p>
+<p>We would now like to <strong>import</strong> all these data into a table so that we can maintain and manipuate
+all data inside DataJoint.</p>
+</section>
+<section id="imported-table">
+<h2>Imported table<a class="headerlink" href="#imported-table" title="Permalink to this headline"></a></h2>
+<p>Unlike the <code class="docutils literal notranslate"><span class="pre">Manual</span></code> tables like <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> and <code class="docutils literal notranslate"><span class="pre">Session</span></code> where new data were entered <strong>manually</strong>
+(e.g. via <code class="docutils literal notranslate"><span class="pre">insert</span></code> methods), we would now like to create a table called <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> whose
+table data content is automatically imported from the files above. We can
+achieve this in DataJoint by defining an <code class="docutils literal notranslate"><span class="pre">Imported</span></code> table. Just like the <code class="docutils literal notranslate"><span class="pre">Manual</span></code> table,
+we start by specifiying the table definition:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@schema</span>
+<span class="k">class</span> <span class="nc">Neuron</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">Imported</span><span class="p">):</span>
+    <span class="n">definition</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    -&gt; Session</span>
+<span class="s2">    ---</span>
+<span class="s2">    activity:  longblob    # electric activity of the neuron</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Go ahead and define the above class, thus defining the table inside the database. However,
+keep your class definition around as we will be coming back and adding more content to
+it shortly!</p>
+</div>
+<p>Notice that we have subclassed <code class="docutils literal notranslate"><span class="pre">dj.Imported</span></code> instead of <code class="docutils literal notranslate"><span class="pre">dj.Manual</span></code>, indicating that this is
+going to be an “imported” table. Since we record from one neuron in each session, the neuron
+can be uniquely identified by knowing which session it was recorded in. Thus the primary key
+simply consists of the dependency on <code class="docutils literal notranslate"><span class="pre">Session</span></code> (for review on table dependency, take a look
+at <a class="reference internal" href="child-table.html"><span class="doc">Defining dependent table</span></a>).</p>
+<p>The next bit is interesting. For each neuron, we want to store the recorded electric activity
+which is a NumPy array. The table data type <code class="docutils literal notranslate"><span class="pre">longblob</span></code> allows us to store an arbitrary array
+data (i.e. NumPy array) into the table.</p>
+<p>So far the <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> doesn’t seem to be too much different from a manual table like <code class="docutils literal notranslate"><span class="pre">Session</span></code>.
+One big difference between an imported table (<code class="docutils literal notranslate"><span class="pre">dj.Imported</span></code>) and a manual table (<code class="docutils literal notranslate"><span class="pre">dj.Manual</span></code>)
+is the fact an imported table comes with a special method called <code class="docutils literal notranslate"><span class="pre">populate</span></code>.</p>
+</section>
+<section id="populate-method">
+<h2><code class="docutils literal notranslate"><span class="pre">populate</span></code> method<a class="headerlink" href="#populate-method" title="Permalink to this headline"></a></h2>
+<p>A key feature of imported tables is the existence of the
+<code class="docutils literal notranslate"><span class="pre">populate</span></code> method. Let’s go ahead and 1) instantiate our new table and 2) call <code class="docutils literal notranslate"><span class="pre">populate</span></code>
+method on it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">neuron</span> <span class="o">=</span> <span class="n">Neuron</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">neuron</span>        <span class="c1"># view the content - should be empty</span>
+<span class="go">*mouse_id    *session_date  activity</span>
+<span class="go">+----------+ +------------+ +----------+</span>
+
+
+<span class="go"> (0 tuples)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">neuron</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>     <span class="c1"># call populate method</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">NotImplementedError                       Traceback (most recent call last)</span>
+<span class="go">&lt;ipython-input-211-196e0eb3db4d&gt; in &lt;module&gt;()</span>
+<span class="go">----&gt; 1 neuron.populate()</span>
+
+<span class="go">(...message truncated...)</span>
+
+<span class="go">NotImplementedError: Subclasses of AutoPopulate must implement the method &quot;make&quot;</span>
+</pre></div>
+</div>
+<p>Notice how calling the <code class="docutils literal notranslate"><span class="pre">populate</span></code> method triggered a <code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code> compaining that
+the method <code class="docutils literal notranslate"><span class="pre">make</span></code> is not defined. To get a better sense of what’s going on, let’s go
+back to our class definition and add a very basic <code class="docutils literal notranslate"><span class="pre">make</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@schema</span>
+<span class="k">class</span> <span class="nc">Neuron</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">Imported</span><span class="p">):</span>
+    <span class="n">definition</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    -&gt; Session</span>
+<span class="s2">    ---</span>
+<span class="s2">    activity:  longblob    # electric activity of the neuron</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="hll">    <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>    <span class="c1"># make takes a single argument `key`</span>
+</span><span class="hll">        <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>  <span class="c1"># let&#39;s look a the key content</span>
+</span></pre></div>
+</div>
+<p>Here we have added a very basic <code class="docutils literal notranslate"><span class="pre">make</span></code> method to the class <code class="docutils literal notranslate"><span class="pre">Neuron</span></code>. It turns out
+that <code class="docutils literal notranslate"><span class="pre">make</span></code> takes in a single argument <code class="docutils literal notranslate"><span class="pre">key</span></code>, so we go ahead and let <code class="docutils literal notranslate"><span class="pre">make</span></code>
+print out the content of the <code class="docutils literal notranslate"><span class="pre">key</span></code> argument. Let’s now create a new instance and call <code class="docutils literal notranslate"><span class="pre">populate</span></code>
+again:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">neuron</span> <span class="o">=</span> <span class="n">Neuron</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">neuron</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
+<span class="go">{&#39;mouse_id&#39;: 0, &#39;session_date&#39;: datetime.date(2017, 5, 15)}</span>
+<span class="go">{&#39;mouse_id&#39;: 0, &#39;session_date&#39;: datetime.date(2017, 5, 19)}</span>
+<span class="go">{&#39;mouse_id&#39;: 5, &#39;session_date&#39;: datetime.date(2017, 1, 5)}</span>
+<span class="go">{&#39;mouse_id&#39;: 100, &#39;session_date&#39;: datetime.date(2017, 5, 25)}</span>
+</pre></div>
+</div>
+<p>This time the call to <code class="docutils literal notranslate"><span class="pre">populate</span></code> did not thrown an error but rather printed out four dictionaries.
+Staring at these four dictionaries, you might have noticed that these are the primary key values
+(<code class="docutils literal notranslate"><span class="pre">mouse_id</span></code> and <code class="docutils literal notranslate"><span class="pre">session_date</span></code>) of the four entries from the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span>
+<span class="go">*mouse_id    *session_date  experiment_set experimenter</span>
+<span class="go">+----------+ +------------+ +------------+ +------------+</span>
+<span class="go">0            2017-05-15     0              Edgar Walker</span>
+<span class="go">0            2017-05-19     0              Edgar Walker</span>
+<span class="go">5            2017-01-05     1              Fabian Sinz</span>
+<span class="go">100          2017-05-25     1              Jake Reimer</span>
+<span class="go"> (4 tuples)</span>
+</pre></div>
+</div>
+<p>So what’s going on here? When you call the <code class="docutils literal notranslate"><span class="pre">populate</span></code> method of a table, this triggers DataJoint to
+lookup all the tables that the target table depends on (i.e. <code class="docutils literal notranslate"><span class="pre">Session</span></code> table for <code class="docutils literal notranslate"><span class="pre">Neuron</span></code>),
+and for each possible combination of entries in the dependent (or parent) tables, <code class="docutils literal notranslate"><span class="pre">populate</span></code>
+extracts the primary key values and calls the <code class="docutils literal notranslate"><span class="pre">make</span></code> method.</p>
+<p>In the case of the <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table, the <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table depends only on <code class="docutils literal notranslate"><span class="pre">Session</span></code> table,
+and therefore the <code class="docutils literal notranslate"><span class="pre">populate</span></code> method went through all entries of <code class="docutils literal notranslate"><span class="pre">Session</span></code> and called the <code class="docutils literal notranslate"><span class="pre">make</span></code>
+for each entry in <code class="docutils literal notranslate"><span class="pre">Session</span></code>, passing in the primary key values as the key`` argument!</p>
+<p>So what is this all good for? We can use the fact that <code class="docutils literal notranslate"><span class="pre">populate</span></code> calls <code class="docutils literal notranslate"><span class="pre">make</span></code> for
+every combination of parent tables for <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> to automatically visit all <code class="docutils literal notranslate"><span class="pre">Session</span></code>s and load
+the neuron data for each session and insert the loaded data into the table. Let’s take a look
+at what that implementation might be like.</p>
+</section>
+<section id="implementing-make">
+<h2>Implementing <code class="docutils literal notranslate"><span class="pre">make</span></code><a class="headerlink" href="#implementing-make" title="Permalink to this headline"></a></h2>
+<p>Recall that we wanted to load the neuron activity data from each recorded <code class="docutils literal notranslate"><span class="pre">Session</span></code> into the
+<code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table. We can now achieve that by implementing a <code class="docutils literal notranslate"><span class="pre">make</span></code> method like the following.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@schema</span>
+<span class="k">class</span> <span class="nc">Neuron</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">Imported</span><span class="p">):</span>
+    <span class="n">definition</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    -&gt; Session</span>
+<span class="s2">    ---</span>
+<span class="s2">    activity:  longblob    # electric activity of the neuron</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+       <span class="c1"># use key dictionary to determine the data file path</span>
+       <span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;/path/to/data/data_</span><span class="si">{mouse_id}</span><span class="s2">_</span><span class="si">{session_date}</span><span class="s2">.npy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">)</span>
+
+       <span class="c1"># load the data</span>
+       <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+
+       <span class="c1"># add the loaded data as the &quot;activity&quot; column</span>
+       <span class="n">key</span><span class="p">[</span><span class="s1">&#39;activity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+
+       <span class="c1"># insert the key into self</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+       <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Populated a neuron for </span><span class="si">{mouse_id}</span><span class="s1"> on </span><span class="si">{session_date}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Let’s now take a look a the content of <code class="docutils literal notranslate"><span class="pre">make</span></code> one step at a time.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>   <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="hll">      <span class="c1"># use key dictionary to determine the data file path</span>
+</span><span class="hll">      <span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;/path/to/data/data_</span><span class="si">{mouse_id}</span><span class="s2">_</span><span class="si">{session_date}</span><span class="s2">.npy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">)</span>
+</span>
+      <span class="c1"># load the data</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+
+      <span class="c1"># add the loaded data as the &quot;activity&quot; column</span>
+      <span class="n">key</span><span class="p">[</span><span class="s1">&#39;activity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+
+      <span class="c1"># insert the key into self</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Populated a neuron for </span><span class="si">{mouse_id}</span><span class="s1"> on </span><span class="si">{session_date}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>First of all, we use the passed in <code class="docutils literal notranslate"><span class="pre">key</span></code> dictionary containing the <code class="docutils literal notranslate"><span class="pre">mouse_id</span></code> and <code class="docutils literal notranslate"><span class="pre">session_date</span></code>
+of a single session to determine the path to the neuron data file recorded in that particular session.
+We use the fact that each recording file is named as <code class="docutils literal notranslate"><span class="pre">data_{mouse_id}_{session_date}.npy</span></code>,
+and substitute in the specific session’s values to get the file name.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are working on Windows, note that you would have to use backslashes <code class="docutils literal notranslate"><span class="pre">\</span></code> in place
+of the forward slashes to separate folder names.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>   <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+      <span class="c1"># use key dictionary to determine the data file path</span>
+      <span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;/path/to/data/data_</span><span class="si">{mouse_id}</span><span class="s2">_</span><span class="si">{session_date}</span><span class="s2">.npy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">)</span>
+
+<span class="hll">      <span class="c1"># load the data</span>
+</span><span class="hll">      <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+</span>
+      <span class="c1"># add the loaded data as the &quot;activity&quot; column</span>
+      <span class="n">key</span><span class="p">[</span><span class="s1">&#39;activity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+
+      <span class="c1"># insert the key into self</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Populated a neuron for </span><span class="si">{mouse_id}</span><span class="s1"> on </span><span class="si">{session_date}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>We then load the data from the <code class="docutils literal notranslate"><span class="pre">.npy</span></code> data file, getting a NumPy array that contains the
+recorded neuron’s activity from that session.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>   <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+      <span class="c1"># use key dictionary to determine the data file path</span>
+      <span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;/path/to/data/data_</span><span class="si">{mouse_id}</span><span class="s2">_</span><span class="si">{session_date}</span><span class="s2">.npy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">)</span>
+
+      <span class="c1"># load the data</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+
+<span class="hll">      <span class="c1"># add the loaded data as the &quot;activity&quot; column</span>
+</span><span class="hll">      <span class="n">key</span><span class="p">[</span><span class="s1">&#39;activity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+</span>
+      <span class="c1"># insert the key into self</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Populated a neuron for </span><span class="si">{mouse_id}</span><span class="s1"> on </span><span class="si">{session_date}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The loaded NumPy array data is then assigned to the <code class="docutils literal notranslate"><span class="pre">key</span></code> dictionary under attribute name
+<code class="docutils literal notranslate"><span class="pre">activity</span></code>. Recall that this is the non-primary key <code class="docutils literal notranslate"><span class="pre">longblob</span></code> field that we added to
+the <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table to store the recorded neuron’s electric activity. After adding this
+attribute, the <code class="docutils literal notranslate"><span class="pre">key</span></code> dictionary should now contain three attributes: <code class="docutils literal notranslate"><span class="pre">mouse_id</span></code>, <code class="docutils literal notranslate"><span class="pre">session_date</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">activity</span></code>, with values of the first two specifying a specific <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> entry and the
+value of the <code class="docutils literal notranslate"><span class="pre">activity</span></code> holding the recorded activity for that neuron.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>   <span class="k">def</span> <span class="nf">make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+      <span class="c1"># use key dictionary to determine the data file path</span>
+      <span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;/path/to/data/data_</span><span class="si">{mouse_id}</span><span class="s2">_</span><span class="si">{session_date}</span><span class="s2">.npy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">)</span>
+
+      <span class="c1"># load the data</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+
+      <span class="c1"># add the loaded data as the &quot;activity&quot; column</span>
+      <span class="n">key</span><span class="p">[</span><span class="s1">&#39;activity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+
+<span class="hll">      <span class="c1"># insert the key into self</span>
+</span><span class="hll">      <span class="bp">self</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Populated a neuron for </span><span class="si">{mouse_id}</span><span class="s1"> on </span><span class="si">{session_date}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">key</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>We then finally insert this dictionary containing a single neuron’s activity into <code class="docutils literal notranslate"><span class="pre">self</span></code>, which
+of course points to <code class="docutils literal notranslate"><span class="pre">Neuron</span></code>! With this implementation of <code class="docutils literal notranslate"><span class="pre">make</span></code>, when the <code class="docutils literal notranslate"><span class="pre">populate</span></code>
+method is called, <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> will be <strong>populated</strong> with recorded neuron’s activity from each
+recording session, one a time as desired.</p>
+</section>
+<section id="populating-neuron-table">
+<h2>Populating <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table<a class="headerlink" href="#populating-neuron-table" title="Permalink to this headline"></a></h2>
+<p>Go ahead and redefine the <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> class with the updated <code class="docutils literal notranslate"><span class="pre">make</span></code> method as given
+above. And now let’s call the <code class="docutils literal notranslate"><span class="pre">populate</span></code> method on a new instance of <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> again!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">neuron</span> <span class="o">=</span> <span class="n">Neuron</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">neuron</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
+<span class="go">Populated a neuron for 0 on 2017-05-15</span>
+<span class="go">Populated a neuron for 0 on 2017-05-19</span>
+<span class="go">Populated a neuron for 5 on 2017-01-05</span>
+<span class="go">Populated a neuron for 100 on 2017-05-25</span>
+</pre></div>
+</div>
+<p>As expected the call to <code class="docutils literal notranslate"><span class="pre">populate</span></code> resulted in 4 neurons being inserted into <code class="docutils literal notranslate"><span class="pre">Neuron</span></code>, one for
+each session! Let’s now take a look at its contents:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">neuron</span>
+<span class="go">*mouse_id    *session_date  activity</span>
+<span class="go">+----------+ +------------+ +----------+</span>
+<span class="go">0            2017-05-15     &lt;BLOB&gt;</span>
+<span class="go">0            2017-05-19     &lt;BLOB&gt;</span>
+<span class="go">5            2017-01-05     &lt;BLOB&gt;</span>
+<span class="go">100          2017-05-25     &lt;BLOB&gt;</span>
+<span class="go"> (4 tuples)</span>
+</pre></div>
+</div>
+<p>With a simple call to <code class="docutils literal notranslate"><span class="pre">populate</span></code> we were able to get the table content automatically imported
+from the data files!</p>
+</section>
+<section id="multiple-calls-to-populate">
+<h2>Multiple calls to populate<a class="headerlink" href="#multiple-calls-to-populate" title="Permalink to this headline"></a></h2>
+<p>One very cool feature about <code class="docutils literal notranslate"><span class="pre">populate</span></code> is the fact it is <strong>smart</strong> and knows exactly
+what still needs to be populated and will only call <code class="docutils literal notranslate"><span class="pre">make</span></code> for the missing keys. For example,
+let’s see what happens if we call <code class="docutils literal notranslate"><span class="pre">populate</span></code> on <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table again:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">neuron</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Notice that there was nothing printed out, indicating that <strong>nothing was populated</strong>. This is because the
+<code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table is already populated with all experiments! This means that you can
+call the <code class="docutils literal notranslate"><span class="pre">populate</span></code> method on an <code class="docutils literal notranslate"><span class="pre">dj.Imported</span></code> as many times as you like without the fear of
+triggering unncessary computations.</p>
+<p>The power of this feature becomes even more apparent when a new dataset becomes available. Suppose that
+you have performed an additional recording session. Insert the following entry into the
+<code class="docutils literal notranslate"><span class="pre">Session</span></code> table:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">insert1</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;2017-06-01&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;Jake Reimer&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>and download the following new recording data and place it into your <code class="docutils literal notranslate"><span class="pre">data</span></code> directory:</p>
+<p><code class="xref download docutils literal notranslate"><span class="pre">data_100_2017-06-01.npy</span></code></p>
+<p>Once you have inserted a new entry into the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table and downloaded the new recording file
+into your <code class="docutils literal notranslate"><span class="pre">data</span></code> directory, call <code class="docutils literal notranslate"><span class="pre">populate</span></code> again on <code class="docutils literal notranslate"><span class="pre">Neuron</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">neuron</span><span class="o">.</span><span class="n">populate</span><span class="p">()</span>
+<span class="go">Populated a neuron for 100 on 2017-06-01</span>
+</pre></div>
+</div>
+<p>As you can see, the <code class="docutils literal notranslate"><span class="pre">populate</span></code> call automatically detected that there is one new entry (key) available
+to be populated and called <code class="docutils literal notranslate"><span class="pre">make</span></code> on that missing key.</p>
+<p>By encompassing the logic of importing data for a single primary key in <code class="docutils literal notranslate"><span class="pre">make</span></code> you can now
+easily import data from data files into the <code class="docutils literal notranslate"><span class="pre">Imported</span></code> table automatically as the data becomes
+available.</p>
+</section>
+<section id="what-s-next">
+<h2>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline"></a></h2>
+<p>Congratulations for completing this section! This was a lot of material but hopefully you saw how
+the simple logic of <code class="docutils literal notranslate"><span class="pre">populate</span></code> and <code class="docutils literal notranslate"><span class="pre">make</span></code> can make a data importing task very
+streamlined and automated! In <a class="reference internal" href="computed-table.html"><span class="doc">the next and the last section</span></a> of this tutorial,
+we are going to explore <code class="docutils literal notranslate"><span class="pre">computed</span></code> tables that computes something from data in a parent table and stores the results in the data pipeline!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="more-queries.html" class="btn btn-neutral float-left" title="Queries with multiple tables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="computed-table.html" class="btn btn-neutral float-right" title="Computation in data pipeline" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, DataJoint Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Defining dependent table &mdash; DataJoint Tutorials  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/datajoint_theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Queries with multiple tables" href="more-queries.html" />
+    <link rel="prev" title="Querying and fetching data" href="querying-data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html">
+            <img src="../../../_static/djTutorialLogoWhite.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/introduction.html">Setting up for DataJoint</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/introduction.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/introduction.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/get-database.html">Getting connected to a database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#connect-to-datajoint-io-recommended">Connect to DataJoint.io (Recommended)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/get-database.html#signing-up-to-datajoint-io-account">Signing up to DataJoint.io account</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#setting-up-a-local-database-server-intermediate">Setting up a local database server (Intermediate)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/local-database.html">Setting Up a Local Database Server</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#setting-up-database-using-docker">Setting up database using Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#why-docker">Why Docker?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#installing-docker">Installing Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#launching-a-database-server">Launching a database server</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../setting-up/local-database.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#setting-up-a-database-server-on-another-machine-advanced">Setting up a database server on another machine (Advanced)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/get-database.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/datajoint-python.html">Installing DataJoint for Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#installing-the-datajoint-package">Installing the DataJoint Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-python.html#upgrading-datajoint">Upgrading DataJoint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#configuring-datajoint">Configuring DataJoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-python.html#changing-password">Changing password</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-python.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html">Installing DataJoint for MATLAB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#system-requirements">System requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#installing-the-datajoint-toolbox">Installing the DataJoint Toolbox</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#upgrading-datajoint">Upgrading DataJoint</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#configuring-datajoint">Configuring DataJoint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#changing-password">Changing password</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setting-up/datajoint-matlab.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">First Steps</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Building your first data pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#what-s-covered-in-this-tutorial">What’s covered in this tutorial?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#designing-data-pipelines-for-your-experiments">Designing data pipelines for your experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html#building-in-python">Building in Python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="first-table.html">Defining your first table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#creating-a-schema">Creating a schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#defining-the-mouse-table-class">Defining the Mouse table class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#table-classes">Table classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#table-definition">Table definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="first-table.html#defining-a-table-in-a-schema">Defining a table in a schema</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#creating-the-table-in-the-data-pipeline">Creating the table in the data pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#what-if-i-make-a-mistake">What if I make a mistake?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inserting-data.html">Populating the table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#inserting-one-entry-at-a-time">Inserting one entry at a time</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="inserting-data.html#inserting-a-tuple-list">Inserting a tuple/list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inserting-data.html#inserting-a-dictionary">Inserting a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#inserting-multiple-entries-at-a-time">Inserting multiple entries at a time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#data-integrity">Data integrity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inserting-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="save-tables.html">Saving your data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="save-tables.html#where-is-my-data-pipeline-stored">Where is my data pipeline stored?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="save-tables.html#saving-your-table-code">Saving your table code</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="save-tables.html#defining-your-table-module">Defining your table module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="save-tables.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="querying-data.html">Querying and fetching data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-all-the-data">Fetching all the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-specific-attributes">Fetching specific attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#querying-data">Querying Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#restricting-by-attribute-value">Restricting by attribute value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#using-inequality-in-restriction">Using inequality in restriction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#combining-restrictions">Combining restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="querying-data.html#restricting-by-a-dictionary">Restricting by a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#fetching-query-results">Fetching query results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#deleting-entires">Deleting entires</a></li>
+<li class="toctree-l3"><a class="reference internal" href="querying-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Defining dependent table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#defining-session-table">Defining <code class="docutils literal notranslate"><span class="pre">Session</span></code> table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#for-dependency-specification"><code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> for dependency specification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#dependency-in-action">Dependency in action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integrity-with-table-dependencies">Integrity with table dependencies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#deleting-dependent-entries">Deleting dependent entries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="more-queries.html">Queries with multiple tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#restriction-by-other-table">Restriction by other table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="more-queries.html#combining-restricitions">Combining restricitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#difference-operator">Difference Operator <code class="docutils literal notranslate"><span class="pre">-</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#join-operator">Join operator <code class="docutils literal notranslate"><span class="pre">*</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="more-queries.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="importing-data.html">Importing data into a table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#setting-up-tables">Setting up tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#getting-the-data">Getting the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="importing-data.html#macos">MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="importing-data.html#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="importing-data.html#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#data-files">Data files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#imported-table">Imported table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#populate-method"><code class="docutils literal notranslate"><span class="pre">populate</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#implementing-make">Implementing <code class="docutils literal notranslate"><span class="pre">make</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#populating-neuron-table">Populating <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#multiple-calls-to-populate">Multiple calls to populate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importing-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="computed-table.html">Computation in data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="computed-table.html#computing-statistics-on-neural-activities">Computing statistics on neural activities</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#computed-tables">Computed tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#computing-neuron-activity-statistics">Computing neuron activity statistics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#populating-neuron-statistics">Populating neuron statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="computed-table.html#detecting-spikes-from-neural-activity">Detecting spikes from neural activity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#defining-lookup-tables">Defining Lookup tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#defining-spikedetection-table">Defining <code class="docutils literal notranslate"><span class="pre">SpikeDetection</span></code> table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#populating-spikes">Populating <code class="docutils literal notranslate"><span class="pre">Spikes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="computed-table.html#seeing-them-all-together">Seeing them all together</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="computed-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html#building-in-matlab">Building in MATLAB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/first-table.html">Defining your first table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#creating-a-schema">Creating a schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#defining-the-mouse-table-class">Defining the Mouse table class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/first-table.html#table-classes">Table classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/first-table.html#table-definition">Table definition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/first-table.html#defining-a-table-in-a-schema">Defining a table in a schema</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#creating-the-table-in-the-data-pipeline">Creating the table in the data pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#what-if-i-make-a-mistake">What if I make a mistake?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#where-is-my-data-pipeline-stored">Where is my data pipeline stored?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/first-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/inserting-data.html">Populating the table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#inserting-one-entry-at-a-time">Inserting one entry at a time</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/inserting-data.html#inserting-a-tuple-list">Inserting a tuple/list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/inserting-data.html#inserting-a-structure">Inserting a structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#inserting-multiple-entries-at-a-time">Inserting multiple entries at a time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#data-integrity">Data integrity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/inserting-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/querying-data.html">Querying and fetching data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#fetching-all-the-data">Fetching all the data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#fetching-specific-attributes">Fetching specific attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#querying-data">Querying Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#restricting-by-attribute-value">Restricting by attribute value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#using-inequality-in-restriction">Using inequality in restriction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#combining-restrictions">Combining restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/querying-data.html#restricting-by-a-structure">Restricting by a structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#fetching-query-results">Fetching query results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#deleting-entries">Deleting entries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/querying-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/child-table.html">Defining dependent tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#defining-tutorial-session-table">Defining <code class="docutils literal notranslate"><span class="pre">tutorial.Session</span></code> table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/child-table.html#for-dependency-specification"><code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> for dependency specification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#dependency-in-action">Dependency in action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#integrity-with-table-dependencies">Integrity with table dependencies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/child-table.html#deleting-dependent-entries">Deleting dependent entries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/child-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/more-queries.html">Queries with multiple tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#restriction-by-other-table">Restriction by other table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/more-queries.html#combining-restrictions">Combining restrictions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#difference-operator">Difference Operator <code class="docutils literal notranslate"><span class="pre">-</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#join-operator">Join operator <code class="docutils literal notranslate"><span class="pre">*</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/more-queries.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/importing-data.html">Importing data into a table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#setting-up-tables">Setting up tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#getting-the-data">Getting the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/importing-data.html#macos">MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/importing-data.html#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/importing-data.html#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#data-files">Data files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#imported-table">Imported table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#populate-method"><code class="docutils literal notranslate"><span class="pre">populate</span></code> method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#implementing-maketuples">Implementing <code class="docutils literal notranslate"><span class="pre">makeTuples</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#populating-neuron-table">Populating <code class="docutils literal notranslate"><span class="pre">Neuron</span></code> table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#multiple-calls-to-populate">Multiple calls to populate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/importing-data.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../matlab/computed-table.html">Computation in data pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/computed-table.html#performing-computation-on-data">Performing computation on data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#defining-computed-tables">Defining computed tables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/computed-table.html#detecting-spikes-from-neural-activity">Detecting spikes from neural activity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#defining-lookup-tables">Defining Lookup tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#defining-spikes-table">Defining <code class="docutils literal notranslate"><span class="pre">Spikes</span></code> table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#populating-spikes">Populating <code class="docutils literal notranslate"><span class="pre">Spikes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../matlab/computed-table.html#seeing-them-all-together">Seeing them all together</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../matlab/computed-table.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataJoint Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Building your first data pipeline</a> &raquo;</li>
+      <li>Defining dependent table</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/beginner/building-first-pipeline/python/child-table.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="defining-dependent-table">
+<h1>Defining dependent table<a class="headerlink" href="#defining-dependent-table" title="Permalink to this headline"></a></h1>
+<p>In this section, we will create another <strong>manual</strong> table to store information about each experimental
+session. In doing so, we will see how to <strong>link</strong> two tables via dependencies, expressing how
+one table <strong>depends</strong> on another table.</p>
+<section id="defining-session-table">
+<h2>Defining <code class="docutils literal notranslate"><span class="pre">Session</span></code> table<a class="headerlink" href="#defining-session-table" title="Permalink to this headline"></a></h2>
+<p>Now we have defined the <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> table to store and identify all mice in our lab, we would like to
+define a table called <code class="docutils literal notranslate"><span class="pre">Session</span></code> that will keep track of data related to all mouse experiments.</p>
+<p>When designing a new table, it is always a good idea to start by identify by what set of attributes
+can be used to uniquely identify an entry in the table - thus identifying the primary key.
+From the descriptions given back in <a class="reference internal" href="../index.html"><span class="doc">Building your first data pipeline</span></a>, 1) an experiment session involves
+one mouse, 2) you can record from the same mouse on different days and 3) you could perform experiments on multiple mice per day. Putting this all together, we see that each experiment
+can be uniquely identified by knowing 1) on which mouse it was performed on <strong>and</strong> 2) on which
+day the experiment was performed on.</p>
+<p>Given this we would want to each entry (row) of <code class="docutils literal notranslate"><span class="pre">Session</span></code> table to be identified by the combination of
+the <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> identity and the session date. Now, notice that this means every entry of <code class="docutils literal notranslate"><span class="pre">Session</span></code> must
+have a corresponding entry in the <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> table, reflecting the fact that you cannot perform an
+experiment session without a mouse! In other words, the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table <strong>depends</strong> on the <code class="docutils literal notranslate"><span class="pre">Mouse</span></code>
+table.</p>
+<p>DataJoint lets you formalize this relationship by expressing this dependency in the table’s definition. Let’s take
+a look at how <code class="docutils literal notranslate"><span class="pre">Session</span></code> table may be defined:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@schema</span>
+<span class="k">class</span> <span class="nc">Session</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">Manual</span><span class="p">):</span>
+    <span class="n">definition</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    # experiment session</span>
+<span class="hll"><span class="s2">    -&gt; Mouse</span>
+</span><span class="s2">    session_date: date            # session date</span>
+<span class="s2">    ---</span>
+<span class="s2">    experiment_setup: int         # experiment setup ID</span>
+<span class="s2">    experimenter: varchar(128)    # name of the experimenter</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>The definition of the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table looks very similar to that of <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> except for one notable
+difference. We have this peculiar arrow notation <code class="docutils literal notranslate"><span class="pre">-&gt;</span> <span class="pre">Mouse</span></code> in the table definition.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This table uses a new data type called <code class="docutils literal notranslate"><span class="pre">varchar</span></code>, which stands for variable-length characters.
+You can use this data type to store string values up to the number specified in parenthesis. In this
+case, the name of the <code class="docutils literal notranslate"><span class="pre">experimenter</span></code> can be up to 128 characters long.</p>
+</div>
+<section id="for-dependency-specification">
+<h3><code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> for dependency specification<a class="headerlink" href="#for-dependency-specification" title="Permalink to this headline"></a></h3>
+<p>This arrow notation states that this table (<code class="docutils literal notranslate"><span class="pre">Session</span></code>) <strong>depends</strong> on the following table, in this
+case <code class="docutils literal notranslate"><span class="pre">Mouse</span></code>. Let’s go ahead and instantiate the table to see what the table would look like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>   <span class="c1"># creates the table in the database</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span>     <span class="c1"># view the table</span>
+<span class="go">*mouse_id    *session_date  experiment_set experimenter</span>
+<span class="go">+----------+ +------------+ +------------+ +------------+</span>
+
+<span class="go"> (0 tuples)</span>
+</pre></div>
+</div>
+<p>Notice how the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table now includes the <code class="docutils literal notranslate"><span class="pre">mouse_id</span></code> as an attribute in its primary key despite
+never explicitly specifying this in the definition. By specifying that <code class="docutils literal notranslate"><span class="pre">Session</span></code> depends on <code class="docutils literal notranslate"><span class="pre">Mouse</span></code>,
+DataJoint automatically added the primary key attributes of the parent table (<code class="docutils literal notranslate"><span class="pre">Mouse</span></code>) into
+the dependent/child table (<code class="docutils literal notranslate"><span class="pre">Session</span></code>). This way, every entry in the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table will have a
+<code class="docutils literal notranslate"><span class="pre">mouse_id</span></code> which in turn can be used to uniquely identify the mouse in the <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> table that the experiment was performed on.</p>
+</section>
+</section>
+<section id="dependency-in-action">
+<h2>Dependency in action<a class="headerlink" href="#dependency-in-action" title="Permalink to this headline"></a></h2>
+<p>Now that we have the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table defined, let’s populate this table with some data, using techniques we
+learned <a class="reference internal" href="inserting-data.html"><span class="doc">Populating the table</span></a>. Remember that we can only perform experiments on a mouse that exists in the <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> table:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mouse</span>
+<span class="go">*mouse_id    dob            sex</span>
+<span class="go">+----------+ +------------+ +--------+</span>
+<span class="go">0            2017-03-01     M</span>
+<span class="go">1            2016-11-19     M</span>
+<span class="go">2            2016-11-20     U</span>
+<span class="go">5            2016-12-25     F</span>
+<span class="go">10           2017-01-01     F</span>
+<span class="go">11           2017-01-03     F</span>
+<span class="go">100          2017-05-12     F</span>
+<span class="go"> (7 tuples)</span>
+</pre></div>
+</div>
+<p>Let’s insert a new session into <cite>Session</cite> table</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<span class="go">      &#39;mouse_id&#39;: 0,</span>
+<span class="go">      &#39;session_date&#39;: &#39;2017-05-15&#39;,</span>
+<span class="go">      &#39;experiment_setup&#39;: 0,</span>
+<span class="go">      &#39;experimenter&#39;: &#39;Edgar Y. Walker&#39;</span>
+<span class="go">    }</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span>
+<span class="go">*mouse_id    *session_date  experiment_set experimenter</span>
+<span class="go">+----------+ +------------+ +------------+ +------------+</span>
+<span class="go">0            2017-05-15     0              Edgar Y. Waker</span>
+<span class="go"> (1 tuples)</span>
+</pre></div>
+</div>
+<p>Using a valid <code class="docutils literal notranslate"><span class="pre">mouse_id</span></code>, we were able to successfully insert a new session. Now what would happen
+if try to enter a session for a mouse that does <strong>not</strong> exist? Let’s try it!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<span class="go">      &#39;mouse_id&#39;: 9999,    # this mouse does NOT exist in Mouse table</span>
+<span class="go">      &#39;session_date&#39;: &#39;2017-01-01&#39;,</span>
+<span class="go">      &#39;experiment_setup&#39;: 0,</span>
+<span class="go">      &#39;experimenter&#39;: &#39;Edgar Y. Walker&#39;</span>
+<span class="go">    }</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">insert1</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">------------------------------------------------------------------</span>
+<span class="go">IntegrityError                   Traceback (most recent call last)</span>
+<span class="go">----&gt; 1 session.insert1(data)</span>
+
+<span class="go">...output truncated...</span>
+
+<span class="go">IntegrityError: (1452, &#39;Cannot add or update a child row: a foreign key constraint fails (`dj_tutorial`.`session`, CONSTRAINT `session_ibfk_1` FOREIGN KEY (`mouse_id`) REFERENCES `mouse` (`mouse_id`) ON UPDATE CASCADE)&#39;)</span>
+</pre></div>
+</div>
+<p>Aha! We get an <code class="docutils literal notranslate"><span class="pre">IntegrityError</span></code> with an error message complaining about a
+foreign key constraint. Foreign key constraint is database lingo for the dependency that
+links two tables. In this case, the attribute <code class="docutils literal notranslate"><span class="pre">mouse_id</span></code> from <code class="docutils literal notranslate"><span class="pre">dj_tutorial.session</span></code> table
+(this is the underlying table name for the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table object) is linked to the <code class="docutils literal notranslate"><span class="pre">mouse_id</span></code>
+attribute in <code class="docutils literal notranslate"><span class="pre">dj_tutorial.mouse</span></code> table (<code class="docutils literal notranslate"><span class="pre">Mouse</span></code> table) by a “foreign key constraint”.</p>
+<p>The foreign key constrain ensures that a linked attributes value exists in the target table. In this
+case we tried to insert a row with <code class="docutils literal notranslate"><span class="pre">mouse_id</span> <span class="pre">=</span> <span class="pre">9999</span></code> which does <em>not</em> exist in the <code class="docutils literal notranslate"><span class="pre">Mouse</span></code>
+table and thus this violates the foreign key constraint.</p>
+</section>
+<section id="integrity-with-table-dependencies">
+<h2>Integrity with table dependencies<a class="headerlink" href="#integrity-with-table-dependencies" title="Permalink to this headline"></a></h2>
+<p>Defining table dependencies as was done from <code class="docutils literal notranslate"><span class="pre">Session</span></code> to <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> allows
+DataJoint to enforce data integrity by linking related table entries together. As we saw,
+this dependency can prevent us from entering data for an invalid target (such as trying to
+record a session for a mouse that doesn’t exist).</p>
+<p>Furthermore, DataJoint uses dependencies to ensure that no dependent entires can be left “orphaned”. Let’s see what we mean by that.</p>
+<section id="deleting-dependent-entries">
+<h3>Deleting dependent entries<a class="headerlink" href="#deleting-dependent-entries" title="Permalink to this headline"></a></h3>
+<p>Remember the <code class="docutils literal notranslate"><span class="pre">delete</span></code> method back from <a class="reference internal" href="querying-data.html#python-delete-entries"><span class="std std-ref">Deleting entires</span></a>? Let’s see what happens
+if we try to delete entries in the <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> table that have dependent entries in <code class="docutils literal notranslate"><span class="pre">Session</span></code>.</p>
+<p>Recall that <code class="docutils literal notranslate"><span class="pre">Session</span></code> table has an entry that points to mouse with <code class="docutils literal notranslate"><span class="pre">mouse_id=0</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span>
+<span class="go">*mouse_id    *session_date  experiment_set experimenter</span>
+<span class="go">+----------+ +------------+ +------------+ +------------+</span>
+<span class="go">0            2017-05-15     0              Edgar Y. Waker</span>
+<span class="go"> (1 tuples)</span>
+</pre></div>
+</div>
+<p>Let’s first try deleting an unrelated mouse entry:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">mouse</span> <span class="o">&amp;</span> <span class="s1">&#39;mouse_id = 1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>   <span class="c1"># delete mouse with ID of 1</span>
+<span class="go">The contents of the following tables are about to be deleted:</span>
+<span class="go">`dj_tutorial`.`mouse` (1 tuples)</span>
+<span class="go">Proceed? [yes, No]:</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">delete</span></code> method warns you that you will be deleting one entry from <code class="docutils literal notranslate"><span class="pre">Mouse</span></code>, as expected. Hit Enter to cancel the deletion, and now let’s see what happens when we try to delete <code class="docutils literal notranslate"><span class="pre">mouse_id=0</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">mouse</span> <span class="o">&amp;</span> <span class="s1">&#39;mouse_id = 0&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>   <span class="c1"># delete mouse with ID of 0</span>
+<span class="go">The contents of the following tables are about to be deleted:</span>
+<span class="go">`dj_tutorial`.`mouse` (1 tuples)</span>
+<span class="go">`dj_tutorial`.`session` (1 tuples)</span>
+<span class="go">Proceed? [yes, No]:</span>
+</pre></div>
+</div>
+<p>Notice how <code class="docutils literal notranslate"><span class="pre">delete</span></code> method tells you that in addition to the entry in the <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> table,
+an additional entry in the <code class="docutils literal notranslate"><span class="pre">Session</span></code> table will be deleted as well! Because there are
+entries in <code class="docutils literal notranslate"><span class="pre">Session</span></code> table that <strong>depends</strong> on the entry in <code class="docutils literal notranslate"><span class="pre">Mouse</span></code> we are about to delete,
+we <strong>have to</strong> delete both the parent and the dependent entries all together!</p>
+<p>This <strong>cascading delete</strong> ensures that you cannot leave data entries “orphaned” - leaving behind
+entries that depends on non-existent parent entries. In addition to the prevention of duplication
+entries as we saw in <a class="reference internal" href="inserting-data.html#python-duplicate-entry"><span class="std std-ref">Data integrity</span></a>, foreign key constraint (dependency) checks and
+cascading deletes are a key part of DataJoint’s strength in maintaining data integrity.</p>
+</section>
+</section>
+<section id="what-s-next">
+<h2>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline"></a></h2>
+<p>We are progressing well in our data pipeline creation adventure. We have successfully defined a
+new table that <strong>depends</strong> on our previous table, thereby starting to form connections or “pipes”
+in our data pipeline. With two linked tables, we can now perform even more exciting queries as
+we will cover in the <a class="reference internal" href="more-queries.html"><span class="doc">next section</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="querying-data.html" class="btn btn-neutral float-left" title="Querying and fetching data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="more-queries.html" class="btn btn-neutral float-right" title="Queries with multiple tables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, DataJoint Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>
