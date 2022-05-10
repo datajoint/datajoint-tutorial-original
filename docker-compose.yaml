@@ -16,7 +16,7 @@ services:
       - |
         make html
         chmod -R o=rwx /main/_build/html
-        tail -f /dev/null
+       
   # # example how to host
   # fakeservices.datajoint.io:
   #   image: datajoint/nginx:v0.1.3
